@@ -23,7 +23,6 @@
   ],
   "frames": [
     {
-      "src": "/images/frame-01.svg",
       "title": "Keynote Address at Nexus",
       "category": "Corporate",
       "location": "Kuala Lumpur",
@@ -153,6 +152,19 @@
       "category": "Birthday",
       "location": "Kuala Lumpur",
       "exif": "35mm f/1.8"
+    },
+    {
+      "src": "/images/SnapInsta.to_655496759_18049556369712444_7396135388466529859_n.jpg",
+      "title": "Imtiaz FC",
+      "category": "Football",
+      "location": "ARENA OWL TRAFFORD",
+      "exif": "150-600mm"
+    },
+    {
+      "src": "/images/SnapInsta.to_655572891_18004236917712372_2075725547071032834_n.jpg",
+      "title": "Imtiaz FC",
+      "category": "Football",
+      "location": "ARENA OWL TRAFFORD"
     }
   ]
 }
