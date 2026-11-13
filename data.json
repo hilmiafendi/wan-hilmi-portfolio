@@ -15,11 +15,26 @@
     "instagramUrl": "https://instagram.com"
   },
   "categories": [
-    { "id": "corporate", "label": "Corporate" },
-    { "id": "convocation", "label": "Convocation" },
-    { "id": "fashion", "label": "Fashion" },
-    { "id": "sports", "label": "Sports" },
-    { "id": "birthday", "label": "Birthday" }
+    {
+      "id": "corporate",
+      "label": "Corporate"
+    },
+    {
+      "id": "convocation",
+      "label": "Convocation"
+    },
+    {
+      "id": "fashion",
+      "label": "Fashion"
+    },
+    {
+      "id": "sportss",
+      "label": "Sportsi"
+    },
+    {
+      "id": "birthday",
+      "label": "Birthday"
+    }
   ],
   "frames": [
     {
