@@ -1,0 +1,84 @@
+media:
+  input: images
+  output: /images
+
+content:
+  - name: portfolio
+    label: Portfolio & Site Settings
+    type: file
+    path: data.json
+    fields:
+      - name: profile
+        label: Profile & Contact Info
+        type: object
+        fields:
+          - name: pageTitle
+            label: Page Title
+            type: string
+          - name: metaDescription
+            label: Meta Description
+            type: text
+          - name: brandName
+            label: Brand Wordmark
+            type: string
+          - name: fullName
+            label: Full Name (Copyright)
+            type: string
+          - name: copyrightYear
+            label: Copyright Year
+            type: string
+          - name: locationShort
+            label: Header Location
+            type: string
+          - name: locationFull
+            label: Drawer Location
+            type: string
+          - name: bioParagraph1
+            label: Bio Paragraph 1
+            type: text
+          - name: bioParagraph2
+            label: Bio Paragraph 2
+            type: text
+          - name: bioParagraph3
+            label: Bio Paragraph 3
+            type: text
+          - name: whatsappNumber
+            label: WhatsApp Number (with country code, e.g. 60106540039)
+            type: string
+          - name: email
+            label: Direct Email
+            type: string
+          - name: instagramUrl
+            label: Instagram URL
+            type: string
+      - name: categories
+        label: Portfolio Categories
+        type: string
+        list: true
+      - name: frames
+        label: Gallery Photographs
+        type: object
+        list: true
+        fields:
+          - name: src
+            label: Photograph
+            type: image
+          - name: title
+            label: Title
+            type: string
+          - name: category
+            label: Category
+            type: select
+            options:
+              values:
+                - Corporate
+                - Convocation
+                - Fashion
+                - Football
+                - Birthday
+          - name: location
+            label: Location
+            type: string
+          - name: exif
+            label: Camera / Lens EXIF
+            type: string
