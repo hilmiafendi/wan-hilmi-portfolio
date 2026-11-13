@@ -15,198 +15,198 @@
     "instagramUrl": "https://instagram.com"
   },
   "categories": [
-    "Corporate",
-    "Convocation",
-    "Fashion",
-    "Sports",
-    "Birthday"
+    { "id": "corporate", "label": "Corporate" },
+    { "id": "convocation", "label": "Convocation" },
+    { "id": "fashion", "label": "Fashion" },
+    { "id": "sports", "label": "Sports" },
+    { "id": "birthday", "label": "Birthday" }
   ],
   "frames": [
     {
       "src": "/Img/frame-01.svg",
       "title": "Keynote Address at Nexus",
-      "category": "Corporate",
+      "category": "corporate",
       "location": "Kuala Lumpur",
       "exif": "35mm f/1.8"
     },
     {
       "src": "/Img/frame-02.svg",
       "title": "Boardroom Dialogue",
-      "category": "Corporate",
+      "category": "corporate",
       "location": "Cyberjaya",
       "exif": "50mm f/2.0"
     },
     {
       "src": "/Img/frame-03.svg",
       "title": "Annual Tech Summit",
-      "category": "Corporate",
+      "category": "corporate",
       "location": "KLCC",
       "exif": "24-70mm f/2.8"
     },
     {
       "src": "/Img/frame-04.svg",
       "title": "Executive Portrait",
-      "category": "Corporate",
+      "category": "corporate",
       "location": "Putrajaya",
       "exif": "85mm f/1.4"
     },
     {
       "src": "/Img/frame-05.svg",
       "title": "Morning Procession",
-      "category": "Convocation",
+      "category": "convocation",
       "location": "Cyberjaya",
       "exif": "50mm f/1.4"
     },
     {
       "src": "/Img/frame-06.svg",
       "title": "Tassel Turn",
-      "category": "Convocation",
+      "category": "convocation",
       "location": "Bangi",
       "exif": "85mm f/1.8"
     },
     {
       "src": "/Img/frame-07.svg",
       "title": "Family Tribute",
-      "category": "Convocation",
+      "category": "convocation",
       "location": "Serdang",
       "exif": "35mm f/2.0"
     },
     {
       "src": "/Img/frame-08.svg",
       "title": "Chancellor Hall Steps",
-      "category": "Convocation",
+      "category": "convocation",
       "location": "Shah Alam",
       "exif": "24mm f/2.8"
     },
     {
       "src": "/Img/frame-09.svg",
       "title": "Monochrome Linen Study",
-      "category": "Fashion",
+      "category": "fashion",
       "location": "Zhongshan Building",
       "exif": "50mm f/1.4"
     },
     {
       "src": "/Img/frame-10.svg",
       "title": "Late Afternoon Silk",
-      "category": "Fashion",
+      "category": "fashion",
       "location": "Bangsar",
       "exif": "85mm f/1.4"
     },
     {
       "src": "/Img/frame-11.svg",
       "title": "Concrete & Tailoring",
-      "category": "Fashion",
+      "category": "fashion",
       "location": "Petaling Jaya",
       "exif": "35mm f/2.0"
     },
     {
       "src": "/Img/frame-12.svg",
       "title": "Backstage Quiet",
-      "category": "Fashion",
+      "category": "fashion",
       "location": "Kuala Lumpur",
       "exif": "50mm f/1.8"
     },
     {
       "src": "/Img/frame-13.svg",
       "title": "Halftime Huddle",
-      "category": "Sports",
+      "category": "sports",
       "location": "Cheras",
       "exif": "35mm f/1.8"
     },
     {
       "src": "/Img/frame-14.svg",
       "title": "Touchline Sprint",
-      "category": "Sports",
+      "category": "sports",
       "location": "Shah Alam",
       "exif": "200mm f/2.8"
     },
     {
       "src": "/Img/frame-15.svg",
       "title": "Final Whistle",
-      "category": "Sports",
+      "category": "sports",
       "location": "Institut Semarak Felda, Bangi",
       "exif": "150-600mm f 4.5-6.3"
     },
     {
       "src": "/Img/frame-16.svg",
       "title": "Candlelight Toast",
-      "category": "Birthday",
+      "category": "birthday",
       "location": "Damansara",
       "exif": "35mm f/1.4"
     },
     {
       "src": "/Img/frame-17.svg",
       "title": "Garden Table",
-      "category": "Birthday",
+      "category": "birthday",
       "location": "Mont Kiara",
       "exif": "50mm f/1.8"
     },
     {
       "src": "/Img/frame-18.svg",
       "title": "Confetti & Laughter",
-      "category": "Birthday",
+      "category": "birthday",
       "location": "Cyberjaya",
       "exif": "28mm f/2.0"
     },
     {
       "src": "/Img/frame-19.svg",
       "title": "Midnight Polaroids",
-      "category": "Birthday",
+      "category": "birthday",
       "location": "Kuala Lumpur",
       "exif": "35mm f/1.8"
     },
     {
       "src": "/Img/frame-20.svg",
       "title": "Studio Quiet",
-      "category": "Birthday",
+      "category": "birthday",
       "location": "Kuala Lumpur",
       "exif": "35mm f/1.8"
     },
     {
       "src": "/images/IMG_20261113_113812_250.jpg",
       "title": "Halftime Huddle",
-      "category": "Sports",
+      "category": "sports",
       "location": "Cheras",
       "exif": "35mm f/1.8"
     },
     {
       "src": "/images/IMG_20261113_113814_213.jpg",
       "title": "Touchline Sprint",
-      "category": "Sports",
+      "category": "sports",
       "location": "Shah Alam",
       "exif": "200mm f/2.8"
     },
     {
       "src": "/images/IMG_20261113_113819_509.jpg",
       "title": "Final Whistle",
-      "category": "Sports",
+      "category": "sports",
       "location": "Institut Semarak Felda, Bangi",
       "exif": "150-600mm f 4.5-6.3"
     },
     {
       "src": "/images/SnapInsta.to_655496759_18049556369712444_7396135388466529859_n.jpg",
       "title": "Imtiaz FC",
-      "category": "Sports",
+      "category": "sports",
       "location": "ARENA OWL TRAFFORD",
       "exif": "150-600mm"
     },
     {
       "src": "/images/SnapInsta.to_655572891_18004236917712372_2075725547071032834_n.jpg",
       "title": "Imtiaz FC",
-      "category": "Sports",
+      "category": "sports",
       "location": "ARENA OWL TRAFFORD"
     },
     {
       "src": "/images/SnapInsta.to_654865080_18087092267226120_7367080870389872422_n.jpg.webp",
       "title": "Rugby Friendly",
-      "category": "Sports",
+      "category": "sports",
       "location": "KPM Beranang",
       "exif": "150-600mm"
     },
     {
       "src": "/images/SnapInsta.to_661163635_18389556178084853_9048973709000697579_n.jpg.webp",
       "title": "Rugby Friendly",
-      "category": "Sports",
+      "category": "sports",
       "location": "KPM Beranang"
     }
   ]
