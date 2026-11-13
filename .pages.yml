@@ -70,12 +70,9 @@ content:
             label: Category
             type: select
             options:
-              values:
-                - Corporate
-                - Convocation
-                - Fashion
-                - Football
-                - Birthday
+              path: data.json
+              value: categories
+              label: categories
           - name: location
             label: Location
             type: string
