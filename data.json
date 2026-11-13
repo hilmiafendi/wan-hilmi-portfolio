@@ -18,7 +18,7 @@
     "Corporate",
     "Convocation",
     "Fashion",
-    "Football",
+    "Sport",
     "Birthday"
   ],
   "frames": [
@@ -165,6 +165,19 @@
       "title": "Imtiaz FC",
       "category": "Football",
       "location": "ARENA OWL TRAFFORD"
+    },
+    {
+      "src": "/images/SnapInsta.to_654865080_18087092267226120_7367080870389872422_n.jpg.webp",
+      "title": "Rugby Friendly",
+      "category": "Football",
+      "location": "KPM Beranang",
+      "exif": "150-600mm"
+    },
+    {
+      "src": "/images/SnapInsta.to_661163635_18389556178084853_9048973709000697579_n.jpg.webp",
+      "title": "Rugby Friendly",
+      "category": "Football",
+      "location": "KPM Beranang"
     }
   ]
 }
