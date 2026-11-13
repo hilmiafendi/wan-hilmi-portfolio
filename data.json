@@ -1,5 +1,4 @@
 {
-  "githubRepo": "",
   "profile": {
     "pageTitle": "HILMI PHOTOGRAPHY",
     "metaDescription": "Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Sports, and Birthdays in Cyberjaya & Kuala Lumpur.",
@@ -16,10 +15,34 @@
     "instagramUrl": "https://instagram.com"
   },
   "categories": [
-    { "id": "corporate", "label": "Corporate" },
-    { "id": "convocation", "label": "Convocation" },
-    { "id": "fashion", "label": "Fashion" },
-    { "id": "sports", "label": "Sports" },
-    { "id": "birthday", "label": "Birthday" }
+    {
+      "id": "corporate",
+      "label": "Corporate"
+    },
+    {
+      "id": "convocation",
+      "label": "Convocation"
+    },
+    {
+      "id": "fashion",
+      "label": "Fashion"
+    },
+    {
+      "id": "sports",
+      "label": "Sportsss"
+    },
+    {
+      "id": "birthday",
+      "label": "Birthday"
+    }
+  ],
+  "frames": [
+    {
+      "src": "/images/1794562663199-rugby-friendly.jpg",
+      "title": "Rugby Friendly",
+      "category": "sports",
+      "location": "KPM Beranang",
+      "exif": "Sigma 150-600mm"
+    }
   ]
 }
