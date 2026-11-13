@@ -9,7 +9,7 @@
   <!-- Editorial Typography: Plus Jakarta Sans & IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN with Class-Based Dark Mode -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -40,7 +40,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Hide scrollbar on mobile category strip */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -100,12 +99,13 @@
       transform-origin: left;
     }
 
-    /* Lightbox & Drawer Transitions */
     #lightbox,
-    #info-drawer-backdrop {
+    #info-drawer-backdrop,
+    #admin-drawer-backdrop {
       transition: opacity 0.25s ease, visibility 0.25s ease;
     }
-    #info-drawer-panel {
+    #info-drawer-panel,
+    #admin-drawer-panel {
       transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     }
   </style>
@@ -117,7 +117,6 @@
   <!-- ===================================================================== -->
   <header class="sticky top-0 z-40 bg-alabaster/95 dark:bg-obsidian/95 backdrop-blur-sm border-b border-hairline dark:border-hairlineDark transition-colors duration-300">
     <div class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 h-14 sm:h-16 flex items-center justify-between gap-4">
-      <!-- Left: Photographer Brand Wordmark -->
       <a
         href="#"
         id="wordmark-reset"
@@ -126,17 +125,21 @@
         HILMI VISUALS 2026
       </a>
 
-      <!-- Center / Right: Clean Category Filters (Desktop) -->
       <nav
         id="desktop-filters"
         aria-label="Category Filters"
         class="hidden md:flex items-center gap-7 lg:gap-9 text-[11px] tracking-[0.14em] uppercase"
-      >
-        <!-- Rendered via JS -->
-      </nav>
+      ></nav>
 
-      <!-- Far Right: Theme Toggle & Info / Book Drawer Trigger -->
-      <div class="shrink-0 flex items-center gap-5 sm:gap-6 text-[11px] tracking-[0.16em] uppercase">
+      <div class="shrink-0 flex items-center gap-4 sm:gap-6 text-[11px] tracking-[0.16em] uppercase">
+        <button
+          type="button"
+          id="open-admin-btn"
+          class="hidden font-mono text-[10px] px-2.5 py-1 border border-charcoal dark:border-neutral-100 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian"
+        >
+          [ Edit Studio ]
+        </button>
+
         <button
           type="button"
           id="theme-toggle"
@@ -156,42 +159,38 @@
       </div>
     </div>
 
-    <!-- Mobile Horizontal Filter Strip -->
     <nav
       id="mobile-filters"
       aria-label="Mobile Category Filters"
       class="md:hidden flex items-center gap-6 px-5 h-10 overflow-x-auto no-scrollbar border-t border-hairline dark:border-hairlineDark text-[11px] tracking-[0.14em] uppercase"
-    >
-      <!-- Rendered via JS -->
-    </nav>
+    ></nav>
   </header>
 
   <!-- ===================================================================== -->
   <!-- 2. IMMEDIATE EDITORIAL MASONRY GALLERY (90%+ VIEWPORT DOMINANCE)      -->
   <!-- ===================================================================== -->
   <main class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 pt-6 sm:pt-8 pb-20 sm:pb-28">
-    <!-- Whisper-quiet index status bar -->
     <div class="flex items-center justify-between pb-5 sm:pb-7 text-[10px] font-mono tracking-[0.16em] uppercase text-neutral-400 dark:text-neutral-500">
       <span id="archive-status">LOADING ARCHIVE...</span>
       <span id="header-location">CYBERJAYA / KUALA LUMPUR</span>
     </div>
 
-    <!-- Masonry Photo Grid -->
     <section
       id="gallery-container"
       aria-label="Selected Works"
       class="gallery-masonry transition-opacity duration-200"
-    >
-      <!-- Photographs injected dynamically from frames/ & data.json -->
-    </section>
+    ></section>
   </main>
 
   <!-- ===================================================================== -->
-  <!-- 3. SINGLE-LINE MINIMALIST FOOTER                                      -->
+  <!-- 3. SINGLE-LINE MINIMALIST FOOTER (5-TAP SECRET TRIGGER ON COPYRIGHT)  -->
   <!-- ===================================================================== -->
   <footer class="border-t border-hairline dark:border-hairlineDark">
     <div class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] font-mono tracking-[0.12em] uppercase text-neutral-500 dark:text-neutral-400">
-      <span id="footer-copyright">&copy; 2026 WAN MUHAMMAD HILMI</span>
+      <span
+        id="footer-copyright"
+        class="select-none cursor-default"
+      >&copy; 2026 WAN MUHAMMAD HILMI</span>
 
       <div class="flex flex-wrap items-center gap-5 sm:gap-7">
         <a
@@ -238,7 +237,6 @@
       aria-label="Info and Contact"
       class="w-full max-w-md h-full bg-alabaster dark:bg-obsidian border-l border-hairline dark:border-hairlineDark p-7 sm:p-10 flex flex-col justify-between translate-x-full overflow-y-auto"
     >
-      <!-- Top Header -->
       <div>
         <div class="flex items-center justify-between pb-6 border-b border-hairline dark:border-hairlineDark">
           <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-400">
@@ -254,21 +252,17 @@
           </button>
         </div>
 
-        <!-- Concise 3-Sentence Bio -->
         <div class="mt-8 space-y-4 text-sm leading-relaxed font-light text-neutral-700 dark:text-neutral-300">
           <p id="bio-p1"></p>
           <p id="bio-p2"></p>
           <p id="bio-p3"></p>
         </div>
 
-        <!-- Category Selector Pill Row for Pre-Filled WhatsApp Inquiry -->
         <div class="mt-10 pt-8 border-t border-hairline dark:border-hairlineDark">
           <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 mb-3.5">
             Select Assignment Type
           </p>
-          <div id="drawer-niche-pills" class="flex flex-wrap gap-2">
-            <!-- Rendered via JS -->
-          </div>
+          <div id="drawer-niche-pills" class="flex flex-wrap gap-2"></div>
 
           <a
             id="drawer-whatsapp-link"
@@ -283,7 +277,6 @@
         </div>
       </div>
 
-      <!-- Bottom Direct Email & Location -->
       <div class="mt-10 pt-6 border-t border-hairline dark:border-hairlineDark space-y-4 text-xs">
         <div class="flex items-center justify-between">
           <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Direct Email</span>
@@ -307,7 +300,282 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 5. DISTRACTION-FREE FULL-SCREEN LIGHTBOX                              -->
+  <!-- 5. ADMIN EDIT STUDIO DRAWER (TRIGGERED BY 5 TAPS ON COPYRIGHT)        -->
+  <!-- ===================================================================== -->
+  <div
+    id="admin-drawer-backdrop"
+    aria-hidden="true"
+    class="fixed inset-0 z-50 bg-black/40 dark:bg-black/70 backdrop-blur-[2px] opacity-0 invisible pointer-events-none flex justify-end"
+  >
+    <aside
+      id="admin-drawer-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Admin Studio"
+      class="w-full max-w-lg h-full bg-alabaster dark:bg-obsidian border-l border-hairline dark:border-hairlineDark p-6 sm:p-8 flex flex-col justify-between translate-x-full overflow-y-auto"
+    >
+      <div>
+        <!-- Admin Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-hairline dark:border-hairlineDark">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em]">
+              Admin Studio
+            </span>
+          </div>
+          <div class="flex items-center gap-3">
+            <button
+              type="button"
+              id="admin-exit-mode-btn"
+              class="font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-400 hover:text-charcoal dark:hover:text-neutral-100"
+            >
+              [ Lock ]
+            </button>
+            <button
+              type="button"
+              id="close-admin-btn"
+              class="font-mono text-[11px] uppercase tracking-[0.16em] hover:opacity-55"
+            >
+              [ Close &times; ]
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Banner -->
+        <div id="admin-toast" class="hidden mt-4 px-3.5 py-2.5 border border-hairline dark:border-hairlineDark font-mono text-[11px]"></div>
+
+        <!-- STEP A: GitHub Connection (Shown if not connected or when toggled) -->
+        <div id="admin-auth-box" class="mt-5 p-4 border border-hairline dark:border-hairlineDark bg-neutral-100/60 dark:bg-neutral-900/60 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500">
+              GitHub Repo Sync
+            </span>
+            <span id="admin-conn-status" class="font-mono text-[10px] text-neutral-400">Not Connected</span>
+          </div>
+
+          <input
+            type="text"
+            id="gh-repo-input"
+            placeholder="owner/repo (e.g. wanhilmi/photography)"
+            class="w-full px-3 py-2 text-xs font-mono bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+          />
+
+          <input
+            type="password"
+            id="gh-token-input"
+            placeholder="GitHub Fine-Grained Token (github_pat_...)"
+            class="w-full px-3 py-2 text-xs font-mono bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+          />
+
+          <button
+            type="button"
+            id="save-gh-creds-btn"
+            class="w-full py-2 px-4 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[11px] uppercase tracking-[0.14em] hover:opacity-85"
+          >
+            Connect Repository
+          </button>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="mt-6 flex border-b border-hairline dark:border-hairlineDark font-mono text-[11px] uppercase tracking-[0.14em]">
+          <button
+            type="button"
+            data-admin-tab="upload"
+            class="admin-tab-btn pb-2.5 pr-5 border-b border-charcoal dark:border-neutral-100 font-medium"
+          >
+            + Upload Photo
+          </button>
+          <button
+            type="button"
+            data-admin-tab="profile"
+            class="admin-tab-btn pb-2.5 px-5 text-neutral-400 hover:text-charcoal dark:hover:text-neutral-200"
+          >
+            Profile &amp; Bio
+          </button>
+          <button
+            type="button"
+            data-admin-tab="categories"
+            class="admin-tab-btn pb-2.5 pl-5 text-neutral-400 hover:text-charcoal dark:hover:text-neutral-200"
+          >
+            Categories
+          </button>
+        </div>
+
+        <!-- TAB 1: UPLOAD NEW PHOTOGRAPH -->
+        <form id="admin-tab-upload" class="mt-5 space-y-4">
+          <div>
+            <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1.5">
+              Select Photo (Auto-compressed to crisp WebP/JPEG)
+            </label>
+            <input
+              type="file"
+              id="upload-file-input"
+              accept="image/*"
+              required
+              class="w-full text-xs font-mono file:mr-3 file:py-2 file:px-3 file:border file:border-charcoal dark:file:border-neutral-200 file:bg-transparent file:text-xs file:font-mono file:uppercase file:cursor-pointer"
+            />
+            <img id="upload-preview" src="" alt="" class="hidden mt-3 max-h-44 w-auto object-contain border border-hairline dark:border-hairlineDark" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">
+                Title
+              </label>
+              <input
+                type="text"
+                id="upload-title"
+                placeholder="e.g. Touchline Sprint"
+                required
+                class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+              />
+            </div>
+
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">
+                Category
+              </label>
+              <select
+                id="upload-category"
+                class="w-full px-3 py-2 text-xs bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+              ></select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">
+                Location
+              </label>
+              <input
+                type="text"
+                id="upload-location"
+                placeholder="e.g. Putrajaya"
+                class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+              />
+            </div>
+
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">
+                Camera / Lens EXIF
+              </label>
+              <input
+                type="text"
+                id="upload-exif"
+                placeholder="e.g. 85mm f/1.4"
+                class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="publish-photo-btn"
+            class="w-full py-3.5 px-5 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity"
+          >
+            Publish Photo to Gallery &uarr;
+          </button>
+        </form>
+
+        <!-- TAB 2: EDIT PROFILE & BIO -->
+        <form id="admin-tab-profile" class="hidden mt-5 space-y-3.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Brand Wordmark</label>
+              <input type="text" id="edit-brandName" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Full Name (Footer)</label>
+              <input type="text" id="edit-fullName" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Header Location</label>
+              <input type="text" id="edit-locationShort" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Drawer Base Location</label>
+              <input type="text" id="edit-locationFull" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Bio Paragraph 1</label>
+            <textarea id="edit-bio1" rows="2" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
+          </div>
+          <div>
+            <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Bio Paragraph 2</label>
+            <textarea id="edit-bio2" rows="2" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
+          </div>
+          <div>
+            <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Bio Paragraph 3</label>
+            <textarea id="edit-bio3" rows="2" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">WhatsApp</label>
+              <input type="text" id="edit-whatsapp" class="w-full px-3 py-2 text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Email</label>
+              <input type="email" id="edit-email" class="w-full px-3 py-2 text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+            <div>
+              <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Instagram URL</label>
+              <input type="url" id="edit-instagram" class="w-full px-3 py-2 text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="save-profile-btn"
+            class="w-full py-3.5 px-5 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity"
+          >
+            Save Profile Changes
+          </button>
+        </form>
+
+        <!-- TAB 3: MANAGE CATEGORIES -->
+        <div id="admin-tab-categories" class="hidden mt-5 space-y-4">
+          <div id="admin-category-list" class="space-y-2"></div>
+
+          <div class="pt-3 border-t border-hairline dark:border-hairlineDark flex gap-2">
+            <input
+              type="text"
+              id="new-category-label"
+              placeholder="New category name (e.g. Motorsports)"
+              class="flex-1 px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"
+            />
+            <button
+              type="button"
+              id="add-category-btn"
+              class="px-4 py-2 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[11px] uppercase tracking-[0.14em]"
+            >
+              Add
+            </button>
+          </div>
+
+          <button
+            type="button"
+            id="save-categories-btn"
+            class="w-full py-3 px-5 border border-charcoal dark:border-neutral-200 font-mono text-xs uppercase tracking-[0.16em] hover:opacity-75"
+          >
+            Save Categories to GitHub
+          </button>
+        </div>
+      </div>
+
+      <p class="mt-8 pt-4 border-t border-hairline dark:border-hairlineDark font-mono text-[10px] text-neutral-400 leading-relaxed">
+        Tip: While Edit Mode is unlocked, hover or tap any photo card in the main gallery to delete it or move it to the top.
+      </p>
+    </aside>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 6. DISTRACTION-FREE FULL-SCREEN LIGHTBOX                              -->
   <!-- ===================================================================== -->
   <div
     id="lightbox"
@@ -316,10 +584,8 @@
     aria-label="Full-Screen Image Viewer"
     class="fixed inset-0 z-50 bg-alabaster dark:bg-obsidian text-charcoal dark:text-neutral-100 flex flex-col justify-between p-5 sm:p-10 lg:p-12 opacity-0 invisible pointer-events-none"
   >
-    <!-- Top Bar: Frame Counter & Close -->
     <div class="flex items-center justify-between text-[11px] font-mono tracking-[0.16em] uppercase">
       <span id="lb-counter" class="text-neutral-400">01 / 20</span>
-
       <button
         type="button"
         id="lb-close"
@@ -330,7 +596,6 @@
       </button>
     </div>
 
-    <!-- Center Viewport Image -->
     <div class="relative flex-1 flex items-center justify-center my-4 sm:my-6 overflow-hidden select-none">
       <button
         type="button"
@@ -358,7 +623,6 @@
       </button>
     </div>
 
-    <!-- Bottom Caption & EXIF Metadata Strip -->
     <div class="border-t border-hairline dark:border-hairlineDark pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs">
       <div class="flex items-center gap-2.5">
         <span id="lb-title" class="font-normal"></span>
@@ -375,7 +639,7 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 6. CMS-DRIVEN PORTFOLIO ENGINE (LOADS data.json + frames/ COLLECTION) -->
+  <!-- 7. PORTFOLIO + 5-TAP SELF-EDITING ENGINE (data.json + images/)        -->
   <!-- ===================================================================== -->
   <script>
     let SITE_DATA = null;
@@ -388,6 +652,10 @@
     let selectedBookingNiche = 'corporate';
     let visibleFrames = [];
     let currentLightboxIndex = 0;
+    let isEditMode = false;
+
+    const STORAGE_REPO_KEY = 'hilmi_admin_repo';
+    const STORAGE_TOKEN_KEY = 'hilmi_admin_token';
 
     // DOM References
     const desktopFilters = document.getElementById('desktop-filters');
@@ -405,11 +673,17 @@
     const lbExif = document.getElementById('lb-exif');
     const lbLocation = document.getElementById('lb-location');
 
-    // Drawer References
+    // Info Drawer References
     const drawerBackdrop = document.getElementById('info-drawer-backdrop');
     const drawerPanel = document.getElementById('info-drawer-panel');
     const drawerNichePills = document.getElementById('drawer-niche-pills');
     const drawerWhatsappLink = document.getElementById('drawer-whatsapp-link');
+
+    // Admin Drawer References
+    const adminBackdrop = document.getElementById('admin-drawer-backdrop');
+    const adminPanel = document.getElementById('admin-drawer-panel');
+    const openAdminBtn = document.getElementById('open-admin-btn');
+    const adminToast = document.getElementById('admin-toast');
 
     function getCategoryLabel(catId) {
       if (!catId) return '';
@@ -425,79 +699,206 @@
       return src.startsWith('/') ? `.${src}` : src;
     }
 
-    function detectGitHubRepo(configuredRepo) {
-      if (configuredRepo && configuredRepo.includes('/')) {
-        return configuredRepo.trim();
+    function showAdminToast(msg, isError = false) {
+      adminToast.textContent = msg;
+      adminToast.classList.remove('hidden', 'text-red-500', 'border-red-500');
+      if (isError) adminToast.classList.add('text-red-500', 'border-red-500');
+      setTimeout(() => adminToast.classList.add('hidden'), 5000);
+    }
+
+    /* -------------------------------------------------------------------
+     * 5-TAP SECRET TRIGGER ON FOOTER COPYRIGHT
+     * ------------------------------------------------------------------- */
+    let tapCount = 0;
+    let tapTimer = null;
+
+    function unlockEditMode() {
+      isEditMode = true;
+      openAdminBtn.classList.remove('hidden');
+      renderGallery();
+      openAdminDrawer();
+    }
+
+    function lockEditMode() {
+      isEditMode = false;
+      openAdminBtn.classList.add('hidden');
+      closeAdminDrawer();
+      renderGallery();
+    }
+
+    document.getElementById('footer-copyright').addEventListener('click', () => {
+      tapCount += 1;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(() => {
+        tapCount = 0;
+      }, 1500);
+
+      if (tapCount >= 5) {
+        tapCount = 0;
+        unlockEditMode();
       }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        unlockEditMode();
+      }
+    });
+
+    /* -------------------------------------------------------------------
+     * GITHUB REST API HELPERS (READ/WRITE data.json & UPLOAD IMAGES)
+     * ------------------------------------------------------------------- */
+    function detectDefaultRepo() {
+      const saved = localStorage.getItem(STORAGE_REPO_KEY);
+      if (saved) return saved;
       const host = window.location.hostname;
       if (host.endsWith('.github.io')) {
         const owner = host.replace('.github.io', '');
-        const pathParts = window.location.pathname.split('/').filter(Boolean);
-        const repo = pathParts.length > 0 ? pathParts[0] : `${owner}.github.io`;
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        const repo = parts.length > 0 ? parts[0] : `${owner}.github.io`;
         return `${owner}/${repo}`;
       }
       return '';
     }
 
-    function sortFramesNewestFirst(frames) {
-      return [...frames].sort((a, b) => {
-        const dateA = a.date ? new Date(a.date).getTime() : 0;
-        const dateB = b.date ? new Date(b.date).getTime() : 0;
-        if (dateB !== dateA) return dateB - dateA;
-        return (a.title || '').localeCompare(b.title || '');
+    function getGitHubCreds() {
+      const repo = (localStorage.getItem(STORAGE_REPO_KEY) || '').trim();
+      const token = (localStorage.getItem(STORAGE_TOKEN_KEY) || '').trim();
+      return { repo, token };
+    }
+
+    function syncCredsUI() {
+      const repoInput = document.getElementById('gh-repo-input');
+      const tokenInput = document.getElementById('gh-token-input');
+      const statusEl = document.getElementById('admin-conn-status');
+
+      const repo = detectDefaultRepo();
+      const token = localStorage.getItem(STORAGE_TOKEN_KEY) || '';
+
+      repoInput.value = repo;
+      tokenInput.value = token;
+
+      if (repo && token) {
+        statusEl.textContent = `Connected (${repo})`;
+        statusEl.classList.remove('text-neutral-400');
+        statusEl.classList.add('text-emerald-600', 'dark:text-emerald-400');
+      } else {
+        statusEl.textContent = 'Not Connected';
+      }
+    }
+
+    document.getElementById('save-gh-creds-btn').addEventListener('click', () => {
+      const repo = document.getElementById('gh-repo-input').value.trim();
+      const token = document.getElementById('gh-token-input').value.trim();
+      if (!repo || !token) {
+        showAdminToast('Enter both owner/repo and your GitHub token.', true);
+        return;
+      }
+      localStorage.setItem(STORAGE_REPO_KEY, repo);
+      localStorage.setItem(STORAGE_TOKEN_KEY, token);
+      syncCredsUI();
+      showAdminToast('Repository connected. Ready to edit.');
+    });
+
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
+    }
+
+    async function githubGetFileSha(repo, token, filePath) {
+      const res = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+      if (res.status === 404) return null;
+      if (!res.ok) throw new Error(`GitHub read failed (${res.status})`);
+      const data = await res.json();
+      return data.sha;
+    }
+
+    async function githubPutFile(repo, token, filePath, base64Content, commitMessage) {
+      const sha = await githubGetFileSha(repo, token, filePath);
+      const body = {
+        message: commitMessage,
+        content: base64Content,
+      };
+      if (sha) body.sha = sha;
+
+      const res = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `GitHub write failed (${res.status})`);
+      }
+      return res.json();
+    }
+
+    async function commitUpdatedDataJson(commitMessage) {
+      const { repo, token } = getGitHubCreds();
+      if (!repo || !token) {
+        throw new Error('Connect your GitHub Repo & Token at the top of Admin Studio first.');
+      }
+
+      const payload = {
+        profile: SITE_DATA.profile,
+        categories: SITE_DATA.categories,
+        frames: PORTFOLIO_FRAMES,
+      };
+
+      const jsonText = JSON.stringify(payload, null, 2);
+      await githubPutFile(repo, token, 'data.json', utf8ToBase64(jsonText), commitMessage);
+    }
+
+    /* -------------------------------------------------------------------
+     * CLIENT-SIDE IMAGE COMPRESSION (MAX 2000PX, 85% QUALITY JPEG)
+     * ------------------------------------------------------------------- */
+    function compressImageToBase64(file, maxWidth = 2000, quality = 0.85) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error('Could not read selected file.'));
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onerror = () => reject(new Error('Invalid image file.'));
+          img.onload = () => {
+            let { width, height } = img;
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            const base64 = dataUrl.split(',')[1];
+            resolve({ base64, previewUrl: dataUrl });
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       });
     }
 
-    async function loadFramesCollection(repoSlug, legacyFrames = []) {
-      const cacheKey = `portfolio_frames_cache_${repoSlug || 'local'}`;
-
-      if (repoSlug) {
-        try {
-          const listRes = await fetch(
-            `https://api.github.com/repos/${repoSlug}/contents/frames`,
-            { headers: { Accept: 'application/vnd.github.v3+json' } }
-          );
-
-          if (listRes.ok) {
-            const entries = await listRes.json();
-            const jsonFiles = Array.isArray(entries)
-              ? entries.filter((item) => item.type === 'file' && item.name.endsWith('.json'))
-              : [];
-
-            const fetchedFrames = await Promise.all(
-              jsonFiles.map(async (file) => {
-                const res = await fetch(`./frames/${encodeURIComponent(file.name)}`, { cache: 'no-store' });
-                if (!res.ok) return null;
-                return res.json();
-              })
-            );
-
-            const validFrames = sortFramesNewestFirst(fetchedFrames.filter(Boolean));
-            if (validFrames.length > 0) {
-              try {
-                localStorage.setItem(cacheKey, JSON.stringify(validFrames));
-              } catch (_) {}
-              return validFrames;
-            }
-          }
-        } catch (err) {
-          console.warn('GitHub collection lookup fallback:', err);
-        }
-      }
-
-      // Fallback 1: Cached frames if GitHub API rate-limits
-      try {
-        const cached = localStorage.getItem(cacheKey);
-        if (cached) {
-          const parsed = JSON.parse(cached);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-        }
-      } catch (_) {}
-
-      // Fallback 2: Legacy frames array if still present in data.json
-      return Array.isArray(legacyFrames) ? legacyFrames : [];
-    }
-
+    /* -------------------------------------------------------------------
+     * THEME, PROFILE & NAVIGATION RENDERING
+     * ------------------------------------------------------------------- */
     function updateThemeLabel() {
       const isDark = document.documentElement.classList.contains('dark');
       themeToggleBtn.textContent = isDark ? '[ Light ]' : '[ Dark ]';
@@ -571,6 +972,9 @@
       });
     }
 
+    /* -------------------------------------------------------------------
+     * GALLERY RENDERING (WITH INLINE ADMIN DELETE / MOVE-TOP CONTROLS)
+     * ------------------------------------------------------------------- */
     function renderGallery() {
       visibleFrames =
         activeCategory === 'all'
@@ -590,11 +994,35 @@
       galleryContainer.innerHTML = visibleFrames
         .map((frame, index) => {
           const catLabel = getCategoryLabel(frame.category);
+          const globalIndex = PORTFOLIO_FRAMES.indexOf(frame);
+
+          const adminControls = isEditMode
+            ? `
+              <div class="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+                <button
+                  type="button"
+                  data-move-top="${globalIndex}"
+                  class="px-2.5 py-1 bg-alabaster/95 dark:bg-obsidian/95 border border-hairline dark:border-hairlineDark font-mono text-[10px] uppercase tracking-[0.12em] hover:opacity-75"
+                >
+                  &uarr; Top
+                </button>
+                <button
+                  type="button"
+                  data-delete-frame="${globalIndex}"
+                  class="px-2.5 py-1 bg-red-600 text-white font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            `
+            : '';
+
           return `
             <figure
               data-index="${index}"
               class="gallery-item group relative overflow-hidden bg-neutral-100 dark:bg-neutral-900 cursor-zoom-in"
             >
+              ${adminControls}
               <img
                 src="${resolveImageSrc(frame.src)}"
                 alt="${frame.title} — ${catLabel} in ${frame.location || ''}"
@@ -618,8 +1046,47 @@
         .join('');
 
       document.querySelectorAll('.gallery-item').forEach((item) => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+          if (e.target.closest('[data-delete-frame]') || e.target.closest('[data-move-top]')) return;
           openLightbox(parseInt(item.dataset.index, 10));
+        });
+      });
+
+      document.querySelectorAll('[data-delete-frame]').forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const idx = parseInt(btn.dataset.deleteFrame, 10);
+          const target = PORTFOLIO_FRAMES[idx];
+          if (!target || !confirm(`Remove "${target.title}" from your portfolio?`)) return;
+
+          btn.textContent = '...';
+          try {
+            PORTFOLIO_FRAMES.splice(idx, 1);
+            await commitUpdatedDataJson(`Remove photo: ${target.title}`);
+            renderGallery();
+            openAdminDrawer();
+            showAdminToast(`Removed "${target.title}".`);
+          } catch (err) {
+            showAdminToast(err.message, true);
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-move-top]').forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const idx = parseInt(btn.dataset.moveTop, 10);
+          if (idx <= 0) return;
+
+          btn.textContent = '...';
+          try {
+            const [moved] = PORTFOLIO_FRAMES.splice(idx, 1);
+            PORTFOLIO_FRAMES.unshift(moved);
+            await commitUpdatedDataJson(`Move photo to top: ${moved.title}`);
+            renderGallery();
+          } catch (err) {
+            showAdminToast(err.message, true);
+          }
         });
       });
     }
@@ -642,6 +1109,252 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
+    /* -------------------------------------------------------------------
+     * ADMIN STUDIO DRAWER LOGIC (UPLOAD, PROFILE, CATEGORIES)
+     * ------------------------------------------------------------------- */
+    function populateAdminForms() {
+      syncCredsUI();
+
+      // Category select in upload tab
+      const catSelect = document.getElementById('upload-category');
+      catSelect.innerHTML = BOOKING_NICHES.map(
+        (c) => `<option value="${c.id}">${c.label}</option>`
+      ).join('');
+
+      // Profile fields
+      const p = SITE_DATA.profile || {};
+      document.getElementById('edit-brandName').value = p.brandName || '';
+      document.getElementById('edit-fullName').value = p.fullName || '';
+      document.getElementById('edit-locationShort').value = p.locationShort || '';
+      document.getElementById('edit-locationFull').value = p.locationFull || '';
+      document.getElementById('edit-bio1').value = p.bioParagraph1 || '';
+      document.getElementById('edit-bio2').value = p.bioParagraph2 || '';
+      document.getElementById('edit-bio3').value = p.bioParagraph3 || '';
+      document.getElementById('edit-whatsapp').value = p.whatsappNumber || '';
+      document.getElementById('edit-email').value = p.email || '';
+      document.getElementById('edit-instagram').value = p.instagramUrl || '';
+
+      renderAdminCategoriesList();
+    }
+
+    function renderAdminCategoriesList() {
+      const listEl = document.getElementById('admin-category-list');
+      listEl.innerHTML = SITE_DATA.categories
+        .map(
+          (cat, i) => `
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[10px] text-neutral-400 w-24 truncate">${cat.id}</span>
+            <input
+              type="text"
+              data-cat-label-idx="${i}"
+              value="${cat.label}"
+              class="flex-1 px-2.5 py-1.5 text-xs bg-transparent border border-hairline dark:border-hairlineDark"
+            />
+            <button
+              type="button"
+              data-remove-cat-idx="${i}"
+              class="px-2.5 py-1.5 font-mono text-[10px] text-red-500 border border-hairline dark:border-hairlineDark hover:border-red-500"
+            >
+              &times;
+            </button>
+          </div>
+        `
+        )
+        .join('');
+
+      listEl.querySelectorAll('[data-cat-label-idx]').forEach((inp) => {
+        inp.addEventListener('input', () => {
+          const i = parseInt(inp.dataset.catLabelIdx, 10);
+          SITE_DATA.categories[i].label = inp.value;
+        });
+      });
+
+      listEl.querySelectorAll('[data-remove-cat-idx]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.dataset.removeCatIdx, 10);
+          SITE_DATA.categories.splice(i, 1);
+          renderAdminCategoriesList();
+        });
+      });
+    }
+
+    document.getElementById('add-category-btn').addEventListener('click', () => {
+      const input = document.getElementById('new-category-label');
+      const label = input.value.trim();
+      if (!label) return;
+      const id = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (SITE_DATA.categories.some((c) => c.id === id)) {
+        showAdminToast('That category already exists.', true);
+        return;
+      }
+      SITE_DATA.categories.push({ id, label });
+      input.value = '';
+      renderAdminCategoriesList();
+    });
+
+    document.getElementById('save-categories-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('save-categories-btn');
+      btn.textContent = 'Saving...';
+      try {
+        await commitUpdatedDataJson('Update portfolio categories');
+        refreshNormalizedCategories();
+        renderCategoryNav();
+        renderDrawerPills();
+        renderGallery();
+        populateAdminForms();
+        showAdminToast('Categories saved to GitHub.');
+      } catch (err) {
+        showAdminToast(err.message, true);
+      } finally {
+        btn.textContent = 'Save Categories to GitHub';
+      }
+    });
+
+    // Admin Tabs Switching
+    document.querySelectorAll('.admin-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.adminTab;
+        document.querySelectorAll('.admin-tab-btn').forEach((b) => {
+          b.classList.remove('border-b', 'border-charcoal', 'dark:border-neutral-100', 'font-medium');
+          b.classList.add('text-neutral-400');
+        });
+        btn.classList.add('border-b', 'border-charcoal', 'dark:border-neutral-100', 'font-medium');
+        btn.classList.remove('text-neutral-400');
+
+        document.getElementById('admin-tab-upload').classList.toggle('hidden', tab !== 'upload');
+        document.getElementById('admin-tab-profile').classList.toggle('hidden', tab !== 'profile');
+        document.getElementById('admin-tab-categories').classList.toggle('hidden', tab !== 'categories');
+      });
+    });
+
+    // Image Preview on File Pick
+    const fileInput = document.getElementById('upload-file-input');
+    const previewImg = document.getElementById('upload-preview');
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files?.[0];
+      if (!file) {
+        previewImg.classList.add('hidden');
+        return;
+      }
+      previewImg.src = URL.createObjectURL(file);
+      previewImg.classList.remove('hidden');
+    });
+
+    // Upload Photo Submit
+    document.getElementById('admin-tab-upload').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const { repo, token } = getGitHubCreds();
+      if (!repo || !token) {
+        showAdminToast('Connect your GitHub Repo & Token first.', true);
+        return;
+      }
+
+      const file = fileInput.files?.[0];
+      if (!file) return;
+
+      const title = document.getElementById('upload-title').value.trim();
+      const category = document.getElementById('upload-category').value;
+      const location = document.getElementById('upload-location').value.trim();
+      const exif = document.getElementById('upload-exif').value.trim();
+
+      const btn = document.getElementById('publish-photo-btn');
+      btn.disabled = true;
+      btn.textContent = 'Compressing & Uploading...';
+
+      try {
+        const { base64, previewUrl } = await compressImageToBase64(file);
+        const safeSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'frame';
+        const fileName = `${Date.now()}-${safeSlug}.jpg`;
+        const repoPath = `images/${fileName}`;
+
+        await githubPutFile(repo, token, repoPath, base64, `Upload photo: ${title}`);
+
+        const newFrame = {
+          src: `/${repoPath}`,
+          title,
+          category,
+          location,
+          exif,
+        };
+
+        PORTFOLIO_FRAMES.unshift(newFrame);
+        await commitUpdatedDataJson(`Add frame to gallery: ${title}`);
+
+        // Instant local preview using data URL until GitHub Pages finishes rebuilding
+        const instantFrame = { ...newFrame, src: previewUrl };
+        PORTFOLIO_FRAMES[0] = instantFrame;
+        renderGallery();
+        PORTFOLIO_FRAMES[0] = newFrame;
+
+        e.target.reset();
+        previewImg.classList.add('hidden');
+        showAdminToast(`Published "${title}"! Live on GitHub in ~30s.`);
+      } catch (err) {
+        showAdminToast(err.message, true);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Publish Photo to Gallery ↑';
+      }
+    });
+
+    // Save Profile Submit
+    document.getElementById('admin-tab-profile').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('save-profile-btn');
+      btn.disabled = true;
+      btn.textContent = 'Saving Profile...';
+
+      try {
+        SITE_DATA.profile = {
+          ...SITE_DATA.profile,
+          brandName: document.getElementById('edit-brandName').value.trim(),
+          fullName: document.getElementById('edit-fullName').value.trim(),
+          locationShort: document.getElementById('edit-locationShort').value.trim(),
+          locationFull: document.getElementById('edit-locationFull').value.trim(),
+          bioParagraph1: document.getElementById('edit-bio1').value.trim(),
+          bioParagraph2: document.getElementById('edit-bio2').value.trim(),
+          bioParagraph3: document.getElementById('edit-bio3').value.trim(),
+          whatsappNumber: document.getElementById('edit-whatsapp').value.trim(),
+          email: document.getElementById('edit-email').value.trim(),
+          instagramUrl: document.getElementById('edit-instagram').value.trim(),
+        };
+
+        await commitUpdatedDataJson('Update profile & contact settings');
+        hydrateProfile(SITE_DATA.profile);
+        showAdminToast('Profile updated & pushed to GitHub.');
+      } catch (err) {
+        showAdminToast(err.message, true);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Profile Changes';
+      }
+    });
+
+    function openAdminDrawer() {
+      populateAdminForms();
+      adminBackdrop.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+      adminBackdrop.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+      adminPanel.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAdminDrawer() {
+      adminPanel.classList.add('translate-x-full');
+      adminBackdrop.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+      adminBackdrop.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+      document.body.style.overflow = '';
+    }
+
+    openAdminBtn.addEventListener('click', openAdminDrawer);
+    document.getElementById('close-admin-btn').addEventListener('click', closeAdminDrawer);
+    document.getElementById('admin-exit-mode-btn').addEventListener('click', lockEditMode);
+    adminBackdrop.addEventListener('click', (e) => {
+      if (e.target === adminBackdrop) closeAdminDrawer();
+    });
+
+    /* -------------------------------------------------------------------
+     * PUBLIC INFO & CONTACT DRAWER
+     * ------------------------------------------------------------------- */
     function renderDrawerPills() {
       drawerNichePills.innerHTML = BOOKING_NICHES.map((niche) => {
         const active = niche.id === selectedBookingNiche;
@@ -718,6 +1431,9 @@
       }, 2000);
     });
 
+    /* -------------------------------------------------------------------
+     * LIGHTBOX VIEWER
+     * ------------------------------------------------------------------- */
     function updateLightboxContent() {
       const frame = visibleFrames[currentLightboxIndex];
       if (!frame) return;
@@ -772,6 +1488,7 @@
       if (e.key === 'Escape') {
         if (lightbox.classList.contains('visible')) closeLightbox();
         if (drawerBackdrop.classList.contains('visible')) closeDrawer();
+        if (adminBackdrop.classList.contains('visible')) closeAdminDrawer();
       }
       if (!lightbox.classList.contains('visible')) return;
       if (e.key === 'ArrowRight') showNextFrame();
@@ -779,28 +1496,38 @@
     });
 
     let touchStartX = 0;
-    lightbox.addEventListener(
-      'touchstart',
-      (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      },
-      { passive: true }
-    );
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
 
-    lightbox.addEventListener(
-      'touchend',
-      (e) => {
-        const swipeDistance = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(swipeDistance) > 45) {
-          if (swipeDistance > 0) showNextFrame();
-          else showPrevFrame();
-        }
-      },
-      { passive: true }
-    );
+    lightbox.addEventListener('touchend', (e) => {
+      const swipeDistance = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(swipeDistance) > 45) {
+        if (swipeDistance > 0) showNextFrame();
+        else showPrevFrame();
+      }
+    }, { passive: true });
+
+    /* -------------------------------------------------------------------
+     * INITIALIZATION FROM data.json
+     * ------------------------------------------------------------------- */
+    function refreshNormalizedCategories() {
+      const rawCats = Array.isArray(SITE_DATA.categories) ? SITE_DATA.categories : [];
+      const normalizedCats = rawCats.map((cat) =>
+        typeof cat === 'string'
+          ? { id: cat.toLowerCase(), label: cat }
+          : { id: cat.id, label: cat.label || cat.id }
+      );
+      SITE_DATA.categories = normalizedCats;
+      CATEGORY_MAP = Object.fromEntries(normalizedCats.map((c) => [c.id, c.label]));
+      CATEGORIES = [{ id: 'all', label: 'All' }, ...normalizedCats];
+      BOOKING_NICHES = [...normalizedCats];
+      if (!BOOKING_NICHES.some((c) => c.id === selectedBookingNiche)) {
+        selectedBookingNiche = BOOKING_NICHES[0]?.id || 'corporate';
+      }
+    }
 
     const FALLBACK_DATA = {
-      githubRepo: "",
       profile: {
         pageTitle: "HILMI PHOTOGRAPHY",
         metaDescription: "Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Sports, and Birthdays in Cyberjaya & Kuala Lumpur.",
@@ -826,39 +1553,25 @@
       frames: []
     };
 
-    async function applySiteData(siteData) {
+    function applySiteData(siteData) {
       SITE_DATA = siteData;
-
-      const rawCats = Array.isArray(SITE_DATA.categories) ? SITE_DATA.categories : [];
-      const normalizedCats = rawCats.map((cat) =>
-        typeof cat === 'string'
-          ? { id: cat.toLowerCase(), label: cat }
-          : { id: cat.id, label: cat.label || cat.id }
-      );
-
-      CATEGORY_MAP = Object.fromEntries(normalizedCats.map((c) => [c.id, c.label]));
-      CATEGORIES = [{ id: 'all', label: 'All' }, ...normalizedCats];
-      BOOKING_NICHES = [...normalizedCats];
-      selectedBookingNiche = BOOKING_NICHES[0]?.id || 'corporate';
-
+      PORTFOLIO_FRAMES = Array.isArray(SITE_DATA.frames) ? SITE_DATA.frames : [];
+      refreshNormalizedCategories();
       hydrateProfile(SITE_DATA.profile);
       renderCategoryNav();
-      renderDrawerPills();
-
-      const repoSlug = detectGitHubRepo(SITE_DATA.githubRepo);
-      PORTFOLIO_FRAMES = await loadFramesCollection(repoSlug, SITE_DATA.frames);
       renderGallery();
+      renderDrawerPills();
     }
 
     async function initPortfolio() {
       try {
-        const response = await fetch('./data.json', { cache: 'no-store' });
+        const response = await fetch(`./data.json?t=${Date.now()}`, { cache: 'no-store' });
         if (!response.ok) throw new Error('Failed to load data.json');
         const loaded = await response.json();
-        await applySiteData(loaded);
+        applySiteData(loaded);
       } catch (err) {
         console.warn('Falling back to embedded preview data:', err);
-        await applySiteData(FALLBACK_DATA);
+        applySiteData(FALLBACK_DATA);
       }
     }
 
