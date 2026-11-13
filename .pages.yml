@@ -53,8 +53,15 @@ content:
             type: string
       - name: categories
         label: Portfolio Categories
-        type: string
+        type: object
         list: true
+        fields:
+          - name: id
+            label: Category ID (e.g. corporate — never change after creating)
+            type: string
+          - name: label
+            label: Display Name (safe to rename anytime)
+            type: string
       - name: frames
         label: Gallery Photographs
         type: object
@@ -71,8 +78,8 @@ content:
             type: select
             options:
               path: data.json
-              value: categories
-              label: categories
+              value: categories[].id
+              label: categories[].label
           - name: location
             label: Location
             type: string
