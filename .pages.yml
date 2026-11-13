@@ -3,8 +3,52 @@ media:
   output: /images
 
 content:
-  - name: portfolio
-    label: Portfolio & Site Settings
+  - name: frames
+    label: Gallery Photographs
+    type: collection
+    path: frames
+    extension: json
+    view:
+      fields: [title, category, location, date]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: src
+        label: Photograph
+        type: image
+      - name: title
+        label: Title
+        type: string
+      - name: category
+        label: Category
+        type: select
+        options:
+          values:
+            - value: corporate
+              label: Corporate
+            - value: convocation
+              label: Convocation
+            - value: fashion
+              label: Fashion
+            - value: sports
+              label: Sports
+            - value: birthday
+              label: Birthday
+      - name: location
+        label: Location
+        type: string
+      - name: exif
+        label: Camera / Lens EXIF
+        type: string
+      - name: date
+        label: Shoot Date (newest shows first)
+        type: date
+
+  - name: settings
+    label: Site Settings & Bio
     type: file
     path: data.json
     fields:
@@ -57,40 +101,8 @@ content:
         list: true
         fields:
           - name: id
-            label: Category ID (e.g. corporate — never change after creating)
+            label: Category ID (e.g. corporate)
             type: string
           - name: label
-            label: Display Name (safe to rename anytime)
-            type: string
-      - name: frames
-        label: Gallery Photographs
-        type: object
-        list: true
-        fields:
-          - name: src
-            label: Photograph
-            type: image
-          - name: title
-            label: Title
-            type: string
-          - name: category
-            label: Category
-            type: select
-            options:
-              values:
-                - value: corporate
-                  label: Corporate
-                - value: convocation
-                  label: Convocation
-                - value: fashion
-                  label: Fashion
-                - value: sports
-                  label: Sports
-                - value: birthday
-                  label: Birthday
-          - name: location
-            label: Location
-            type: string
-          - name: exif
-            label: Camera / Lens EXIF
+            label: Display Name
             type: string
