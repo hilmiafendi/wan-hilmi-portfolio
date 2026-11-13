@@ -38,6 +38,13 @@
   ],
   "frames": [
     {
+      "src": "/images/1794564554130-ains-fc.jpg",
+      "title": "AINS FC",
+      "category": "sports",
+      "location": "Institut Semarak Felda, Bangi",
+      "exif": "Sigma 150-600mm"
+    },
+    {
       "src": "/images/1794564808289-imtiaz-fc.jpg",
       "title": "Imtiaz FC",
       "category": "sports",
@@ -56,13 +63,6 @@
       "title": "IMTIAZ FC",
       "category": "sports",
       "location": "Arena Owl Trafford",
-      "exif": "Sigma 150-600mm"
-    },
-    {
-      "src": "/images/1794564554130-ains-fc.jpg",
-      "title": "AINS FC",
-      "category": "sports",
-      "location": "Institut Semarak Felda, Bangi",
       "exif": "Sigma 150-600mm"
     },
     {
