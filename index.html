@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
 <head>
@@ -131,27 +131,112 @@
       object-fit: cover;
     }
 
-    /* Desktop Filter Hairline Indicator */
+    /* ===================================================================
+     * INTERACTIVE CATEGORY FILTER MICRO-ANIMATIONS
+     * =================================================================== */
     .filter-btn {
       position: relative;
-      padding-bottom: 4px;
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition:
+        color 0.25s ease,
+        transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background-color 0.25s ease;
     }
-    .filter-btn::after {
-      content: '';
+    .filter-btn:hover {
+      transform: translateY(-1px);
+    }
+    .filter-btn:active {
+      transform: scale(0.93) translateY(0);
+    }
+
+    .filter-btn .filter-label {
+      display: inline-block;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .filter-btn:hover .filter-label {
+      transform: translateY(-0.5px);
+    }
+
+    .filter-btn .filter-count {
+      display: inline-block;
+      transition:
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.25s ease,
+        color 0.25s ease;
+    }
+    .filter-btn.is-active .filter-count {
+      transform: translateY(-1.5px) scale(1.08);
+      opacity: 1;
+    }
+
+    /* Sliding Desktop Hairline & Pill Glider */
+    #desktop-filter-glider {
       position: absolute;
-      left: 0;
       bottom: 0;
-      width: 100%;
+      left: 0;
       height: 1.5px;
       background-color: currentColor;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 999px;
+      pointer-events: none;
+      transition:
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.25s ease;
     }
-    .filter-btn.is-active::after,
-    .filter-btn:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
+
+    #desktop-filter-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 3px;
+      pointer-events: none;
+      transition:
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.25s ease;
+    }
+
+    /* Mobile Filter Pill Tactile Spring & Sliding Highlight */
+    #mobile-filter-glider {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      border-radius: 3px;
+      pointer-events: none;
+      transition:
+        transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .mobile-filter-pill {
+      position: relative;
+      z-index: 1;
+      transition:
+        color 0.28s ease,
+        border-color 0.28s ease,
+        transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .mobile-filter-pill:active {
+      transform: scale(0.92);
+    }
+
+    @keyframes filterPulsePop {
+      0% {
+        transform: scale(0.92);
+      }
+      55% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    .filter-clicked-pop {
+      animation: filterPulsePop 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* Staggered Card Reveal Animation */
@@ -218,7 +303,7 @@
       <nav
         id="desktop-filters"
         aria-label="Category Filters"
-        class="hidden lg:flex items-center gap-7 xl:gap-9 text-[11px] tracking-[0.14em] uppercase"
+        class="relative hidden lg:flex items-center gap-4 xl:gap-6 text-[11px] tracking-[0.14em] uppercase"
       ></nav>
 
       <!-- Right Utility Controls -->
@@ -285,7 +370,7 @@
       <nav
         id="mobile-filters"
         aria-label="Mobile Category Filters"
-        class="flex items-center gap-2 px-4 py-2.5 overflow-x-auto no-scrollbar text-[11px] tracking-[0.13em] uppercase"
+        class="relative flex items-center gap-2 px-4 py-2.5 overflow-x-auto no-scrollbar text-[11px] tracking-[0.13em] uppercase"
       ></nav>
     </div>
   </header>
@@ -605,7 +690,7 @@
       <div class="flex flex-wrap items-center gap-4 text-[10px] text-neutral-400 dark:text-neutral-500">
         <span>ALL RIGHTS RESERVED</span>
         <span>&bull;</span>
-        <a href="# wordmark-reset" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="hover:text-charcoal dark:hover:text-neutral-200 transition-colors">
+        <a href="#wordmark-reset" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="hover:text-charcoal dark:hover:text-neutral-200 transition-colors">
           BACK TO TOP &uarr;
         </a>
       </div>
@@ -1534,54 +1619,171 @@
       document.getElementById('drawer-location').textContent = profile.locationFull || 'Cyberjaya & Kuala Lumpur, MY';
     }
 
-    function renderCategoryNav() {
-      // Desktop Navigation with Subtle Superscript Frame Counts
-      desktopFilters.innerHTML = CATEGORIES.map((cat) => {
-        const isActive = cat.id === activeCategory;
-        const count = String(getCategoryCount(cat.id)).padStart(2, '0');
-        return `
-          <button
-            type="button"
-            data-category="${cat.id}"
-            class="filter-btn shrink-0 transition-colors flex items-baseline gap-1 ${
-              isActive
-                ? 'is-active text-charcoal dark:text-neutral-100 font-medium'
-                : 'text-neutral-400 hover:text-charcoal dark:text-neutral-500 dark:hover:text-neutral-200'
-            }"
-          >
-            <span>${cat.label}</span>
-            <span class="font-mono text-[9px] opacity-65">${count}</span>
-          </button>
-        `;
-      }).join('');
+    function updateFilterGliders(animate = true) {
+      // 1. Desktop Sliding Indicator & Subtle Backdrop Pill
+      const activeDesktopBtn = desktopFilters.querySelector(`.filter-btn[data-category="${activeCategory}"]`);
+      const desktopGlider = document.getElementById('desktop-filter-glider');
+      const desktopBackdrop = document.getElementById('desktop-filter-backdrop');
 
-      // Mobile Pill Bar with Touch-Friendly Targets
-      mobileFilters.innerHTML = CATEGORIES.map((cat) => {
-        const isActive = cat.id === activeCategory;
-        const count = String(getCategoryCount(cat.id)).padStart(2, '0');
-        return `
-          <button
-            type="button"
-            data-category="${cat.id}"
-            class="mobile-filter-pill shrink-0 px-3 py-1.5 rounded-sm font-mono text-[10px] tracking-[0.14em] uppercase transition-all flex items-center gap-1.5 border ${
-              isActive
-                ? 'border-charcoal bg-charcoal text-alabaster dark:border-neutral-100 dark:bg-neutral-100 dark:text-obsidian font-medium'
-                : 'border-hairline dark:border-hairlineDark bg-surfaceLight/50 dark:bg-surfaceDark/50 text-neutral-500 dark:text-neutral-400'
-            }"
-          >
-            <span>${cat.label}</span>
-            <span class="opacity-60 text-[9px]">${count}</span>
-          </button>
-        `;
-      }).join('');
+      if (activeDesktopBtn && desktopGlider && desktopBackdrop) {
+        if (!animate) {
+          desktopGlider.style.transition = 'none';
+          desktopBackdrop.style.transition = 'none';
+        }
+        const left = activeDesktopBtn.offsetLeft;
+        const width = activeDesktopBtn.offsetWidth;
+
+        desktopGlider.style.width = `${width}px`;
+        desktopGlider.style.transform = `translateX(${left}px)`;
+        desktopGlider.style.opacity = '1';
+
+        desktopBackdrop.style.width = `${width}px`;
+        desktopBackdrop.style.transform = `translateX(${left}px)`;
+        desktopBackdrop.style.opacity = '1';
+
+        if (!animate) {
+          desktopGlider.offsetHeight; // Force reflow
+          desktopGlider.style.transition = '';
+          desktopBackdrop.style.transition = '';
+        }
+      }
+
+      // 2. Mobile Sliding Pill Glider
+      const activeMobileBtn = mobileFilters.querySelector(`.mobile-filter-pill[data-category="${activeCategory}"]`);
+      const mobileGlider = document.getElementById('mobile-filter-glider');
+
+      if (activeMobileBtn && mobileGlider) {
+        if (!animate) {
+          mobileGlider.style.transition = 'none';
+        }
+        const left = activeMobileBtn.offsetLeft;
+        const width = activeMobileBtn.offsetWidth;
+        const height = activeMobileBtn.offsetHeight;
+
+        mobileGlider.style.width = `${width}px`;
+        mobileGlider.style.height = `${height}px`;
+        mobileGlider.style.transform = `translateX(${left}px)`;
+        mobileGlider.style.opacity = '1';
+
+        if (!animate) {
+          mobileGlider.offsetHeight;
+          mobileGlider.style.transition = '';
+        }
+      }
+    }
+
+    function syncActiveFilterClasses(clickedCategory) {
+      // Update Desktop Filter States without full DOM wipe so CSS gliders glide smoothly
+      desktopFilters.querySelectorAll('.filter-btn').forEach((btn) => {
+        const isActive = btn.dataset.category === activeCategory;
+        btn.classList.toggle('is-active', isActive);
+        btn.classList.toggle('text-charcoal', isActive);
+        btn.classList.toggle('dark:text-neutral-100', isActive);
+        btn.classList.toggle('font-medium', isActive);
+
+        btn.classList.toggle('text-neutral-400', !isActive);
+        btn.classList.toggle('hover:text-charcoal', !isActive);
+        btn.classList.toggle('dark:text-neutral-500', !isActive);
+        btn.classList.toggle('dark:hover:text-neutral-200', !isActive);
+
+        if (btn.dataset.category === clickedCategory) {
+          btn.classList.remove('filter-clicked-pop');
+          void btn.offsetWidth;
+          btn.classList.add('filter-clicked-pop');
+        }
+      });
+
+      // Update Mobile Pill States
+      mobileFilters.querySelectorAll('.mobile-filter-pill').forEach((btn) => {
+        const isActive = btn.dataset.category === activeCategory;
+        btn.classList.toggle('border-charcoal', isActive);
+        btn.classList.toggle('text-alabaster', isActive);
+        btn.classList.toggle('dark:border-neutral-100', isActive);
+        btn.classList.toggle('dark:text-obsidian', isActive);
+        btn.classList.toggle('font-medium', isActive);
+
+        btn.classList.toggle('border-hairline', !isActive);
+        btn.classList.toggle('dark:border-hairlineDark', !isActive);
+        btn.classList.toggle('bg-surfaceLight/50', !isActive);
+        btn.classList.toggle('dark:bg-surfaceDark/50', !isActive);
+        btn.classList.toggle('text-neutral-500', !isActive);
+        btn.classList.toggle('dark:text-neutral-400', !isActive);
+
+        if (btn.dataset.category === clickedCategory) {
+          btn.classList.remove('filter-clicked-pop');
+          void btn.offsetWidth;
+          btn.classList.add('filter-clicked-pop');
+        }
+      });
+
+      updateFilterGliders(true);
+    }
+
+    function renderCategoryNav() {
+      // Desktop Navigation with Sliding Glider + Subtle Backdrop Highlight
+      desktopFilters.innerHTML =
+        `<span id="desktop-filter-backdrop" class="bg-charcoal/[0.045] dark:bg-white/[0.06] opacity-0"></span>` +
+        `<span id="desktop-filter-glider" class="text-charcoal dark:text-neutral-100 opacity-0"></span>` +
+        CATEGORIES.map((cat) => {
+          const isActive = cat.id === activeCategory;
+          const count = String(getCategoryCount(cat.id)).padStart(2, '0');
+          return `
+            <button
+              type="button"
+              data-category="${cat.id}"
+              class="filter-btn shrink-0 flex items-baseline gap-1.5 ${
+                isActive
+                  ? 'is-active text-charcoal dark:text-neutral-100 font-medium'
+                  : 'text-neutral-400 hover:text-charcoal dark:text-neutral-500 dark:hover:text-neutral-200'
+              }"
+            >
+              <span class="filter-label">${cat.label}</span>
+              <span class="filter-count font-mono text-[9px] opacity-65">${count}</span>
+            </button>
+          `;
+        }).join('');
+
+      // Mobile Pill Bar with Sliding Background Pill
+      mobileFilters.innerHTML =
+        `<span id="mobile-filter-glider" class="bg-charcoal dark:bg-neutral-100 opacity-0"></span>` +
+        CATEGORIES.map((cat) => {
+          const isActive = cat.id === activeCategory;
+          const count = String(getCategoryCount(cat.id)).padStart(2, '0');
+          return `
+            <button
+              type="button"
+              data-category="${cat.id}"
+              class="mobile-filter-pill shrink-0 px-3 py-1.5 rounded-sm font-mono text-[10px] tracking-[0.14em] uppercase flex items-center gap-1.5 border ${
+                isActive
+                  ? 'border-charcoal text-alabaster dark:border-neutral-100 dark:text-obsidian font-medium'
+                  : 'border-hairline dark:border-hairlineDark bg-surfaceLight/50 dark:bg-surfaceDark/50 text-neutral-500 dark:text-neutral-400'
+              }"
+            >
+              <span>${cat.label}</span>
+              <span class="opacity-65 text-[9px]">${count}</span>
+            </button>
+          `;
+        }).join('');
 
       document.querySelectorAll('[data-category]').forEach((btn) => {
         btn.addEventListener('click', () => {
-          setCategory(btn.dataset.category);
+          const targetCat = btn.dataset.category;
+          if (targetCat === activeCategory) {
+            // Replay tactile bounce feedback even when clicking the already active category
+            btn.classList.remove('filter-clicked-pop');
+            void btn.offsetWidth;
+            btn.classList.add('filter-clicked-pop');
+            return;
+          }
+          setCategory(targetCat);
           btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         });
       });
+
+      requestAnimationFrame(() => updateFilterGliders(false));
     }
+
+    window.addEventListener('resize', () => updateFilterGliders(false));
 
     /* -------------------------------------------------------------------
      * VIEW DENSITY SWITCHER (MASONRY / 2-COL EXHIBITION / INDEX GRID)
@@ -1807,12 +2009,15 @@
     function setCategory(categoryId) {
       if (categoryId === activeCategory) return;
       activeCategory = categoryId;
-      renderCategoryNav();
+      syncActiveFilterClasses(categoryId);
 
       galleryContainer.style.opacity = '0';
+      galleryContainer.style.transform = 'translateY(6px)';
+      galleryContainer.style.transition = 'opacity 0.16s ease, transform 0.2s ease';
       setTimeout(() => {
         renderGallery();
         galleryContainer.style.opacity = '1';
+        galleryContainer.style.transform = 'translateY(0)';
       }, 150);
     }
 
@@ -2422,4 +2627,3 @@
   </script>
 </body>
 </html>
-```
