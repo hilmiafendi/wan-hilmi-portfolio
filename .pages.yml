@@ -7,7 +7,7 @@ content:
     label: Gallery Photographs
     type: collection
     path: frames
-    extension: json
+    format: json
     view:
       fields: [title, category, location, date]
       primary: title
