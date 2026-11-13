@@ -182,7 +182,7 @@
       aria-label="Selected Works"
       class="gallery-masonry transition-opacity duration-200"
     >
-      <!-- Photographs injected dynamically from data.json -->
+      <!-- Photographs injected dynamically from frames/ & data.json -->
     </section>
   </main>
 
@@ -375,7 +375,7 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 6. CMS-DRIVEN PORTFOLIO ENGINE (LOADS FROM data.json)                 -->
+  <!-- 6. CMS-DRIVEN PORTFOLIO ENGINE (LOADS data.json + frames/ COLLECTION) -->
   <!-- ===================================================================== -->
   <script>
     let SITE_DATA = null;
@@ -423,6 +423,79 @@
         return src;
       }
       return src.startsWith('/') ? `.${src}` : src;
+    }
+
+    function detectGitHubRepo(configuredRepo) {
+      if (configuredRepo && configuredRepo.includes('/')) {
+        return configuredRepo.trim();
+      }
+      const host = window.location.hostname;
+      if (host.endsWith('.github.io')) {
+        const owner = host.replace('.github.io', '');
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        const repo = pathParts.length > 0 ? pathParts[0] : `${owner}.github.io`;
+        return `${owner}/${repo}`;
+      }
+      return '';
+    }
+
+    function sortFramesNewestFirst(frames) {
+      return [...frames].sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+        if (dateB !== dateA) return dateB - dateA;
+        return (a.title || '').localeCompare(b.title || '');
+      });
+    }
+
+    async function loadFramesCollection(repoSlug, legacyFrames = []) {
+      const cacheKey = `portfolio_frames_cache_${repoSlug || 'local'}`;
+
+      if (repoSlug) {
+        try {
+          const listRes = await fetch(
+            `https://api.github.com/repos/${repoSlug}/contents/frames`,
+            { headers: { Accept: 'application/vnd.github.v3+json' } }
+          );
+
+          if (listRes.ok) {
+            const entries = await listRes.json();
+            const jsonFiles = Array.isArray(entries)
+              ? entries.filter((item) => item.type === 'file' && item.name.endsWith('.json'))
+              : [];
+
+            const fetchedFrames = await Promise.all(
+              jsonFiles.map(async (file) => {
+                const res = await fetch(`./frames/${encodeURIComponent(file.name)}`, { cache: 'no-store' });
+                if (!res.ok) return null;
+                return res.json();
+              })
+            );
+
+            const validFrames = sortFramesNewestFirst(fetchedFrames.filter(Boolean));
+            if (validFrames.length > 0) {
+              try {
+                localStorage.setItem(cacheKey, JSON.stringify(validFrames));
+              } catch (_) {}
+              return validFrames;
+            }
+          }
+        } catch (err) {
+          console.warn('GitHub collection lookup fallback:', err);
+        }
+      }
+
+      // Fallback 1: Cached frames if GitHub API rate-limits
+      try {
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (_) {}
+
+      // Fallback 2: Legacy frames array if still present in data.json
+      return Array.isArray(legacyFrames) ? legacyFrames : [];
     }
 
     function updateThemeLabel() {
@@ -727,6 +800,7 @@
     );
 
     const FALLBACK_DATA = {
+      githubRepo: "",
       profile: {
         pageTitle: "HILMI PHOTOGRAPHY",
         metaDescription: "Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Sports, and Birthdays in Cyberjaya & Kuala Lumpur.",
@@ -752,9 +826,8 @@
       frames: []
     };
 
-    function applySiteData(siteData) {
+    async function applySiteData(siteData) {
       SITE_DATA = siteData;
-      PORTFOLIO_FRAMES = Array.isArray(SITE_DATA.frames) ? SITE_DATA.frames : [];
 
       const rawCats = Array.isArray(SITE_DATA.categories) ? SITE_DATA.categories : [];
       const normalizedCats = rawCats.map((cat) =>
@@ -770,8 +843,11 @@
 
       hydrateProfile(SITE_DATA.profile);
       renderCategoryNav();
-      renderGallery();
       renderDrawerPills();
+
+      const repoSlug = detectGitHubRepo(SITE_DATA.githubRepo);
+      PORTFOLIO_FRAMES = await loadFramesCollection(repoSlug, SITE_DATA.frames);
+      renderGallery();
     }
 
     async function initPortfolio() {
@@ -779,10 +855,10 @@
         const response = await fetch('./data.json', { cache: 'no-store' });
         if (!response.ok) throw new Error('Failed to load data.json');
         const loaded = await response.json();
-        applySiteData(loaded);
+        await applySiteData(loaded);
       } catch (err) {
         console.warn('Falling back to embedded preview data:', err);
-        applySiteData(FALLBACK_DATA);
+        await applySiteData(FALLBACK_DATA);
       }
     }
 
