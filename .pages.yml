@@ -47,7 +47,7 @@ content:
         label: Shoot Date (newest shows first)
         type: date
 
-  - name: settings
+  - name: portfolio
     label: Site Settings & Bio
     type: file
     path: data.json
