@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAN HILMI — PHOTOGRAPHY</title>
+  <meta id="meta-desc" name="description" content="Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Football, and Birthdays in Cyberjaya & Kuala Lumpur." />
+
+  <!-- Editorial Typography: Plus Jakarta Sans & IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN with Class-Based Dark Mode -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace'],
+          },
+          colors: {
+            alabaster: '#FAFAFA',
+            obsidian: '#0B0B0C',
+            charcoal: '#111111',
+            hairline: '#E5E5E5',
+            hairlineDark: '#1F1F22',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Hide scrollbar on mobile category strip */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Editorial 3-Column Masonry Grid */
+    .gallery-masonry {
+      column-count: 1;
+      column-gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .gallery-masonry {
+        column-count: 2;
+        column-gap: 2rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .gallery-masonry {
+        column-count: 3;
+        column-gap: 2.5rem;
+      }
+    }
+
+    .gallery-masonry .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 2rem;
+    }
+    @media (min-width: 1024px) {
+      .gallery-masonry .gallery-item {
+        margin-bottom: 2.5rem;
+      }
+    }
+
+    /* Minimal Hairline Underline Indicator */
+    .filter-btn {
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .filter-btn.is-active::after,
+    .filter-btn:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Lightbox & Drawer Transitions */
+    #lightbox,
+    #info-drawer-backdrop {
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    #info-drawer-panel {
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-alabaster text-charcoal dark:bg-obsidian dark:text-neutral-100 font-sans transition-colors duration-300 selection:bg-charcoal selection:text-alabaster dark:selection:bg-neutral-100 dark:selection:text-obsidian">
+
+  <!-- ===================================================================== -->
+  <!-- 1. ULTRA-MINIMAL SINGLE-ROW STICKY HEADER                             -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-alabaster/95 dark:bg-obsidian/95 backdrop-blur-sm border-b border-hairline dark:border-hairlineDark transition-colors duration-300">
+    <div class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 h-14 sm:h-16 flex items-center justify-between gap-4">
+      <!-- Left: Photographer Brand Wordmark -->
+      <a
+        href="#"
+        id="wordmark-reset"
+        class="shrink-0 text-[11px] sm:text-xs font-medium tracking-[0.24em] uppercase hover:opacity-55 transition-opacity"
+      >
+        WAN HILMI
+      </a>
+
+      <!-- Center / Right: Clean Category Filters (Desktop) -->
+      <nav
+        id="desktop-filters"
+        aria-label="Category Filters"
+        class="hidden md:flex items-center gap-7 lg:gap-9 text-[11px] tracking-[0.14em] uppercase"
+      >
+        <!-- Rendered via JS -->
+      </nav>
+
+      <!-- Far Right: Theme Toggle & Info / Book Drawer Trigger -->
+      <div class="shrink-0 flex items-center gap-5 sm:gap-6 text-[11px] tracking-[0.16em] uppercase">
+        <button
+          type="button"
+          id="theme-toggle"
+          aria-label="Toggle Light or Dark Theme"
+          class="font-mono text-[10px] text-neutral-500 hover:text-charcoal dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+        >
+          [ Dark ]
+        </button>
+
+        <button
+          type="button"
+          id="open-drawer-btn"
+          class="hover:opacity-55 transition-opacity"
+        >
+          Info &amp; Contact
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Horizontal Filter Strip -->
+    <nav
+      id="mobile-filters"
+      aria-label="Mobile Category Filters"
+      class="md:hidden flex items-center gap-6 px-5 h-10 overflow-x-auto no-scrollbar border-t border-hairline dark:border-hairlineDark text-[11px] tracking-[0.14em] uppercase"
+    >
+      <!-- Rendered via JS -->
+    </nav>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- 2. IMMEDIATE EDITORIAL MASONRY GALLERY (90%+ VIEWPORT DOMINANCE)      -->
+  <!-- ===================================================================== -->
+  <main class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 pt-6 sm:pt-8 pb-20 sm:pb-28">
+    <!-- Whisper-quiet index status bar -->
+    <div class="flex items-center justify-between pb-5 sm:pb-7 text-[10px] font-mono tracking-[0.16em] uppercase text-neutral-400 dark:text-neutral-500">
+      <span id="archive-status">LOADING ARCHIVE...</span>
+      <span id="header-location">CYBERJAYA / KUALA LUMPUR</span>
+    </div>
+
+    <!-- Masonry Photo Grid -->
+    <section
+      id="gallery-container"
+      aria-label="Selected Works"
+      class="gallery-masonry transition-opacity duration-200"
+    >
+      <!-- Photographs injected dynamically from data.json -->
+    </section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- 3. SINGLE-LINE MINIMALIST FOOTER                                      -->
+  <!-- ===================================================================== -->
+  <footer class="border-t border-hairline dark:border-hairlineDark">
+    <div class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] font-mono tracking-[0.12em] uppercase text-neutral-500 dark:text-neutral-400">
+      <span id="footer-copyright">&copy; 2026 WAN MUHAMMAD HILMI</span>
+
+      <div class="flex flex-wrap items-center gap-5 sm:gap-7">
+        <a
+          id="footer-instagram"
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-charcoal dark:hover:text-neutral-100 transition-colors"
+        >
+          Instagram &nearr;
+        </a>
+        <a
+          id="footer-whatsapp"
+          href="https://wa.me/60106540039?text=Hi%20Hilmi%2C%20I%20viewed%20your%20portfolio%20and%20would%20like%20to%20inquire%20about%20a%20shoot."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-charcoal dark:hover:text-neutral-100 transition-colors"
+        >
+          WhatsApp &nearr;
+        </a>
+        <a
+          id="footer-email"
+          href="mailto:wan.mohd.hilmi@gmail.com"
+          class="hover:text-charcoal dark:hover:text-neutral-100 transition-colors lowercase"
+        >
+          wan.mohd.hilmi@gmail.com
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- 4. MINIMAL SLIDE-OVER DRAWER FOR "INFO & CONTACT"                     -->
+  <!-- ===================================================================== -->
+  <div
+    id="info-drawer-backdrop"
+    aria-hidden="true"
+    class="fixed inset-0 z-50 bg-black/25 dark:bg-black/60 backdrop-blur-[2px] opacity-0 invisible pointer-events-none flex justify-end"
+  >
+    <aside
+      id="info-drawer-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Info and Contact"
+      class="w-full max-w-md h-full bg-alabaster dark:bg-obsidian border-l border-hairline dark:border-hairlineDark p-7 sm:p-10 flex flex-col justify-between translate-x-full overflow-y-auto"
+    >
+      <!-- Top Header -->
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-hairline dark:border-hairlineDark">
+          <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-400">
+            Info &amp; Bookings
+          </span>
+          <button
+            type="button"
+            id="close-drawer-btn"
+            aria-label="Close Info Drawer"
+            class="font-mono text-[11px] uppercase tracking-[0.16em] hover:opacity-55 transition-opacity"
+          >
+            [ Close &times; ]
+          </button>
+        </div>
+
+        <!-- Concise 3-Sentence Bio -->
+        <div class="mt-8 space-y-4 text-sm leading-relaxed font-light text-neutral-700 dark:text-neutral-300">
+          <p id="bio-p1"></p>
+          <p id="bio-p2"></p>
+          <p id="bio-p3"></p>
+        </div>
+
+        <!-- Category Selector Pill Row for Pre-Filled WhatsApp Inquiry -->
+        <div class="mt-10 pt-8 border-t border-hairline dark:border-hairlineDark">
+          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 mb-3.5">
+            Select Assignment Type
+          </p>
+          <div id="drawer-niche-pills" class="flex flex-wrap gap-2">
+            <!-- Rendered via JS -->
+          </div>
+
+          <a
+            id="drawer-whatsapp-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-6 w-full py-3.5 px-5 border border-charcoal dark:border-neutral-200 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian text-xs font-mono uppercase tracking-[0.16em] flex items-center justify-between hover:opacity-85 transition-opacity"
+          >
+            <span>Inquire via WhatsApp</span>
+            <span>&nearr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Direct Email & Location -->
+      <div class="mt-10 pt-6 border-t border-hairline dark:border-hairlineDark space-y-4 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Direct Email</span>
+          <button
+            type="button"
+            id="copy-email-btn"
+            data-email=""
+            class="font-mono text-[11px] hover:opacity-60 transition-opacity underline underline-offset-4"
+          >
+            <span id="email-text"></span>
+            <span id="copy-badge" class="ml-1.5 text-neutral-400">[Copy]</span>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Base</span>
+          <span id="drawer-location" class="text-neutral-600 dark:text-neutral-300"></span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 5. DISTRACTION-FREE FULL-SCREEN LIGHTBOX                              -->
+  <!-- ===================================================================== -->
+  <div
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Full-Screen Image Viewer"
+    class="fixed inset-0 z-50 bg-alabaster dark:bg-obsidian text-charcoal dark:text-neutral-100 flex flex-col justify-between p-5 sm:p-10 lg:p-12 opacity-0 invisible pointer-events-none"
+  >
+    <!-- Top Bar: Frame Counter & Close -->
+    <div class="flex items-center justify-between text-[11px] font-mono tracking-[0.16em] uppercase">
+      <span id="lb-counter" class="text-neutral-400">01 / 20</span>
+
+      <button
+        type="button"
+        id="lb-close"
+        aria-label="Close Lightbox"
+        class="hover:opacity-55 transition-opacity"
+      >
+        [ Close &times; ]
+      </button>
+    </div>
+
+    <!-- Center Viewport Image -->
+    <div class="relative flex-1 flex items-center justify-center my-4 sm:my-6 overflow-hidden select-none">
+      <button
+        type="button"
+        id="lb-prev"
+        aria-label="Previous Frame"
+        class="hidden sm:flex items-center justify-center w-12 h-12 text-neutral-400 hover:text-current transition-colors mr-4 font-mono text-sm"
+      >
+        &larr;
+      </button>
+
+      <img
+        id="lb-image"
+        src=""
+        alt=""
+        class="max-h-[78vh] max-w-full w-auto h-auto object-contain"
+      />
+
+      <button
+        type="button"
+        id="lb-next"
+        aria-label="Next Frame"
+        class="hidden sm:flex items-center justify-center w-12 h-12 text-neutral-400 hover:text-current transition-colors ml-4 font-mono text-sm"
+      >
+        &rarr;
+      </button>
+    </div>
+
+    <!-- Bottom Caption & EXIF Metadata Strip -->
+    <div class="border-t border-hairline dark:border-hairlineDark pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs">
+      <div class="flex items-center gap-2.5">
+        <span id="lb-title" class="font-normal"></span>
+        <span class="text-neutral-400">/</span>
+        <span id="lb-category" class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400"></span>
+      </div>
+
+      <div class="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
+        <span id="lb-exif"></span>
+        <span>&bull;</span>
+        <span id="lb-location"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 6. CMS-DRIVEN PORTFOLIO ENGINE (LOADS FROM data.json)                 -->
+  <!-- ===================================================================== -->
+  <script>
+    let SITE_DATA = null;
+    let PORTFOLIO_FRAMES = [];
+    let CATEGORIES = ['All'];
+    let BOOKING_NICHES = [];
+
+    let activeCategory = 'All';
+    let selectedBookingNiche = 'Corporate';
+    let visibleFrames = [];
+    let currentLightboxIndex = 0;
+
+    // DOM References
+    const desktopFilters = document.getElementById('desktop-filters');
+    const mobileFilters = document.getElementById('mobile-filters');
+    const galleryContainer = document.getElementById('gallery-container');
+    const archiveStatus = document.getElementById('archive-status');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    // Lightbox References
+    const lightbox = document.getElementById('lightbox');
+    const lbImage = document.getElementById('lb-image');
+    const lbCounter = document.getElementById('lb-counter');
+    const lbTitle = document.getElementById('lb-title');
+    const lbCategory = document.getElementById('lb-category');
+    const lbExif = document.getElementById('lb-exif');
+    const lbLocation = document.getElementById('lb-location');
+
+    // Drawer References
+    const drawerBackdrop = document.getElementById('info-drawer-backdrop');
+    const drawerPanel = document.getElementById('info-drawer-panel');
+    const drawerNichePills = document.getElementById('drawer-niche-pills');
+    const drawerWhatsappLink = document.getElementById('drawer-whatsapp-link');
+
+    /**
+     * Resolve relative image paths cleanly for both root and subpath deployments
+     */
+    function resolveImageSrc(src) {
+      if (!src) return '';
+      if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:')) {
+        return src;
+      }
+      return src.startsWith('/') ? `.${src}` : src;
+    }
+
+    /**
+     * 1. Light / Dark Mode Toggle
+     */
+    function updateThemeLabel() {
+      const isDark = document.documentElement.classList.contains('dark');
+      themeToggleBtn.textContent = isDark ? '[ Light ]' : '[ Dark ]';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      updateThemeLabel();
+    });
+
+    /**
+     * 2. Hydrate Profile & Contact Metadata
+     */
+    function hydrateProfile(profile) {
+      if (!profile) return;
+
+      if (profile.pageTitle) document.title = profile.pageTitle;
+      const metaDesc = document.getElementById('meta-desc');
+      if (metaDesc && profile.metaDescription) metaDesc.setAttribute('content', profile.metaDescription);
+
+      document.getElementById('wordmark-reset').textContent = profile.brandName || 'WAN HILMI';
+      document.getElementById('header-location').textContent = profile.locationShort || 'CYBERJAYA / KUALA LUMPUR';
+
+      document.getElementById('bio-p1').textContent = profile.bioParagraph1 || '';
+      document.getElementById('bio-p2').textContent = profile.bioParagraph2 || '';
+      document.getElementById('bio-p3').textContent = profile.bioParagraph3 || '';
+
+      const year = profile.copyrightYear || new Date().getFullYear();
+      const fullName = (profile.fullName || 'WAN MUHAMMAD HILMI').toUpperCase();
+      document.getElementById('footer-copyright').innerHTML = `&copy; ${year} ${fullName}`;
+
+      const igLink = document.getElementById('footer-instagram');
+      if (profile.instagramUrl) igLink.href = profile.instagramUrl;
+
+      const waNum = (profile.whatsappNumber || '60106540039').replace(/[^0-9]/g, '');
+      const waFooter = document.getElementById('footer-whatsapp');
+      waFooter.href = `https://wa.me/${waNum}?text=${encodeURIComponent('Hi Hilmi, I viewed your portfolio and would like to inquire about a shoot.')}`;
+
+      const email = profile.email || 'wan.mohd.hilmi@gmail.com';
+      const footerEmail = document.getElementById('footer-email');
+      footerEmail.href = `mailto:${email}`;
+      footerEmail.textContent = email;
+
+      const copyBtn = document.getElementById('copy-email-btn');
+      copyBtn.dataset.email = email;
+      document.getElementById('email-text').textContent = email;
+
+      document.getElementById('drawer-location').textContent = profile.locationFull || 'Cyberjaya & Kuala Lumpur, MY';
+    }
+
+    /**
+     * 3. Render Category Navigation
+     */
+    function renderCategoryNav() {
+      const html = CATEGORIES.map((cat) => {
+        const isActive = cat === activeCategory;
+        return `
+          <button
+            type="button"
+            data-category="${cat}"
+            class="filter-btn shrink-0 transition-opacity ${
+              isActive
+                ? 'is-active text-charcoal dark:text-neutral-100 font-medium'
+                : 'text-neutral-400 hover:text-charcoal dark:text-neutral-500 dark:hover:text-neutral-200'
+            }"
+          >
+            ${cat}
+          </button>
+        `;
+      }).join('');
+
+      desktopFilters.innerHTML = html;
+      mobileFilters.innerHTML = html;
+
+      document.querySelectorAll('.filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => setCategory(btn.dataset.category));
+      });
+    }
+
+    /**
+     * 4. Render Editorial Masonry Gallery
+     */
+    function renderGallery() {
+      visibleFrames =
+        activeCategory === 'All'
+          ? [...PORTFOLIO_FRAMES]
+          : PORTFOLIO_FRAMES.filter((frame) => frame.category === activeCategory);
+
+      const countStr = String(visibleFrames.length).padStart(2, '0');
+      archiveStatus.textContent =
+        visibleFrames.length === 0
+          ? 'NO FRAMES IN THIS CATEGORY'
+          : activeCategory === 'All'
+          ? `ARCHIVE — 01 TO ${countStr}`
+          : `${activeCategory.toUpperCase()} — ${countStr} FRAMES`;
+
+      galleryContainer.innerHTML = visibleFrames
+        .map(
+          (frame, index) => `
+          <figure
+            data-index="${index}"
+            class="gallery-item group relative overflow-hidden bg-neutral-100 dark:bg-neutral-900 cursor-zoom-in"
+          >
+            <img
+              src="${resolveImageSrc(frame.src)}"
+              alt="${frame.title} — ${frame.category} in ${frame.location || ''}"
+              loading="lazy"
+              class="w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+            />
+            <!-- Clean Editorial Caption Bar on Hover -->
+            <figcaption class="absolute inset-x-0 bottom-0 px-4 py-3 bg-alabaster/95 dark:bg-obsidian/95 border-t border-hairline dark:border-hairlineDark translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out flex items-baseline justify-between gap-3">
+              <div class="truncate">
+                <span class="text-xs font-normal text-charcoal dark:text-neutral-100">${frame.title}</span>
+                <span class="ml-2 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-400">
+                  ${frame.category}${frame.location ? ` &bull; ${frame.location}` : ''}
+                </span>
+              </div>
+              <span class="shrink-0 font-mono text-[10px] text-neutral-400">
+                ${frame.exif || ''}
+              </span>
+            </figcaption>
+          </figure>
+        `
+        )
+        .join('');
+
+      document.querySelectorAll('.gallery-item').forEach((item) => {
+        item.addEventListener('click', () => {
+          openLightbox(parseInt(item.dataset.index, 10));
+        });
+      });
+    }
+
+    function setCategory(category) {
+      if (category === activeCategory) return;
+      activeCategory = category;
+      renderCategoryNav();
+
+      galleryContainer.style.opacity = '0';
+      setTimeout(() => {
+        renderGallery();
+        galleryContainer.style.opacity = '1';
+      }, 170);
+    }
+
+    document.getElementById('wordmark-reset').addEventListener('click', (e) => {
+      e.preventDefault();
+      setCategory('All');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /**
+     * 5. Info & Contact Slide-Over Drawer
+     */
+    function renderDrawerPills() {
+      drawerNichePills.innerHTML = BOOKING_NICHES.map((niche) => {
+        const active = niche === selectedBookingNiche;
+        return `
+          <button
+            type="button"
+            data-niche="${niche}"
+            class="niche-pill px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.12em] border transition-colors ${
+              active
+                ? 'border-charcoal bg-charcoal text-alabaster dark:border-neutral-100 dark:bg-neutral-100 dark:text-obsidian'
+                : 'border-hairline dark:border-hairlineDark text-neutral-500 hover:border-charcoal dark:hover:border-neutral-300'
+            }"
+          >
+            ${niche}
+          </button>
+        `;
+      }).join('');
+
+      const waNum = (SITE_DATA?.profile?.whatsappNumber || '60106540039').replace(/[^0-9]/g, '');
+      const message = encodeURIComponent(
+        `Hi Hilmi, I visited your portfolio and would like to inquire about a ${selectedBookingNiche} shoot.`
+      );
+      drawerWhatsappLink.href = `https://wa.me/${waNum}?text=${message}`;
+
+      document.querySelectorAll('.niche-pill').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          selectedBookingNiche = btn.dataset.niche;
+          renderDrawerPills();
+        });
+      });
+    }
+
+    function openDrawer() {
+      if (activeCategory !== 'All' && BOOKING_NICHES.includes(activeCategory)) {
+        selectedBookingNiche = activeCategory;
+      }
+      renderDrawerPills();
+      drawerBackdrop.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+      drawerBackdrop.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+      drawerPanel.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawerPanel.classList.add('translate-x-full');
+      drawerBackdrop.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+      drawerBackdrop.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('open-drawer-btn').addEventListener('click', openDrawer);
+    document.getElementById('close-drawer-btn').addEventListener('click', closeDrawer);
+    drawerBackdrop.addEventListener('click', (e) => {
+      if (e.target === drawerBackdrop) closeDrawer();
+    });
+
+    // One-Click Copy Email in Drawer
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const copyBadge = document.getElementById('copy-badge');
+    copyEmailBtn.addEventListener('click', () => {
+      const email = copyEmailBtn.dataset.email;
+      navigator.clipboard?.writeText(email).catch(() => {
+        const tempInput = document.createElement('input');
+        tempInput.value = email;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      });
+
+      copyBadge.textContent = '[Copied]';
+      setTimeout(() => {
+        copyBadge.textContent = '[Copy]';
+      }, 2000);
+    });
+
+    /**
+     * 6. Distraction-Free Full-Screen Lightbox
+     */
+    function updateLightboxContent() {
+      const frame = visibleFrames[currentLightboxIndex];
+      if (!frame) return;
+
+      const currentNum = String(currentLightboxIndex + 1).padStart(2, '0');
+      const totalNum = String(visibleFrames.length).padStart(2, '0');
+
+      lbCounter.textContent = `${currentNum} / ${totalNum}`;
+      lbImage.src = resolveImageSrc(frame.src);
+      lbImage.alt = frame.title;
+      lbTitle.textContent = frame.title;
+      lbCategory.textContent = frame.category;
+      lbExif.textContent = frame.exif || '';
+      lbLocation.textContent = frame.location || '';
+    }
+
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      updateLightboxContent();
+      lightbox.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+      lightbox.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+      lightbox.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+      document.body.style.overflow = '';
+    }
+
+    function showNextFrame() {
+      currentLightboxIndex = (currentLightboxIndex + 1) % visibleFrames.length;
+      updateLightboxContent();
+    }
+
+    function showPrevFrame() {
+      currentLightboxIndex = (currentLightboxIndex - 1 + visibleFrames.length) % visibleFrames.length;
+      updateLightboxContent();
+    }
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-next').addEventListener('click', showNextFrame);
+    document.getElementById('lb-prev').addEventListener('click', showPrevFrame);
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.parentElement === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Global Keyboard Navigation (Lightbox & Drawer)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (lightbox.classList.contains('visible')) closeLightbox();
+        if (drawerBackdrop.classList.contains('visible')) closeDrawer();
+      }
+      if (!lightbox.classList.contains('visible')) return;
+      if (e.key === 'ArrowRight') showNextFrame();
+      if (e.key === 'ArrowLeft') showPrevFrame();
+    });
+
+    // Mobile Touch Swipe Support for Lightbox
+    let touchStartX = 0;
+    lightbox.addEventListener(
+      'touchstart',
+      (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      },
+      { passive: true }
+    );
+
+    lightbox.addEventListener(
+      'touchend',
+      (e) => {
+        const swipeDistance = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(swipeDistance) > 45) {
+          if (swipeDistance > 0) showNextFrame();
+          else showPrevFrame();
+        }
+      },
+      { passive: true }
+    );
+
+    /**
+     * 7. Bootstrap Site From data.json
+     */
+    const FALLBACK_DATA = {"profile": {"pageTitle": "WAN HILMI — PHOTOGRAPHY", "metaDescription": "Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Football, and Birthdays in Cyberjaya & Kuala Lumpur.", "brandName": "WAN HILMI", "fullName": "Wan Muhammad Hilmi", "copyrightYear": "2026", "locationShort": "CYBERJAYA / KUALA LUMPUR", "locationFull": "Cyberjaya & Kuala Lumpur, MY", "bioParagraph1": "Wan Muhammad Hilmi is a documentary and commercial photographer based between Cyberjaya and Kuala Lumpur.", "bioParagraph2": "His work focuses on unscripted human presence across corporate summits, university convocations, editorial fashion, pitchside football, and private celebrations.", "bioParagraph3": "Available for editorial commissions, brand campaigns, and event coverage across Malaysia and Southeast Asia.", "whatsappNumber": "60106540039", "email": "wan.mohd.hilmi@gmail.com", "instagramUrl": "https://instagram.com"}, "categories": ["Corporate", "Convocation", "Fashion", "Football", "Birthday"], "frames": [{"src": "images/frame-01.svg", "title": "Keynote Address at Nexus", "category": "Corporate", "location": "Kuala Lumpur", "exif": "35mm f/1.8"}, {"src": "images/frame-02.svg", "title": "Boardroom Dialogue", "category": "Corporate", "location": "Cyberjaya", "exif": "50mm f/2.0"}, {"src": "images/frame-03.svg", "title": "Annual Tech Summit", "category": "Corporate", "location": "KLCC", "exif": "24-70mm f/2.8"}, {"src": "images/frame-04.svg", "title": "Executive Portrait", "category": "Corporate", "location": "Putrajaya", "exif": "85mm f/1.4"}, {"src": "images/frame-05.svg", "title": "Morning Procession", "category": "Convocation", "location": "Cyberjaya", "exif": "50mm f/1.4"}, {"src": "images/frame-06.svg", "title": "Tassel Turn", "category": "Convocation", "location": "Bangi", "exif": "85mm f/1.8"}, {"src": "images/frame-07.svg", "title": "Family Tribute", "category": "Convocation", "location": "Serdang", "exif": "35mm f/2.0"}, {"src": "images/frame-08.svg", "title": "Chancellor Hall Steps", "category": "Convocation", "location": "Shah Alam", "exif": "24mm f/2.8"}, {"src": "images/frame-09.svg", "title": "Monochrome Linen Study", "category": "Fashion", "location": "Zhongshan Building", "exif": "50mm f/1.4"}, {"src": "images/frame-10.svg", "title": "Late Afternoon Silk", "category": "Fashion", "location": "Bangsar", "exif": "85mm f/1.4"}, {"src": "images/frame-11.svg", "title": "Concrete & Tailoring", "category": "Fashion", "location": "Petaling Jaya", "exif": "35mm f/2.0"}, {"src": "images/frame-12.svg", "title": "Backstage Quiet", "category": "Fashion", "location": "Kuala Lumpur", "exif": "50mm f/1.8"}, {"src": "images/frame-13.svg", "title": "Floodlight Counterattack", "category": "Football", "location": "Bukit Jalil", "exif": "70-200mm f/2.8"}, {"src": "images/frame-14.svg", "title": "Halftime Huddle", "category": "Football", "location": "Cheras", "exif": "35mm f/1.8"}, {"src": "images/frame-15.svg", "title": "Touchline Sprint", "category": "Football", "location": "Shah Alam", "exif": "200mm f/2.8"}, {"src": "images/frame-16.svg", "title": "Final Whistle", "category": "Football", "location": "Subang Jaya", "exif": "85mm f/1.8"}, {"src": "images/frame-17.svg", "title": "Candlelight Toast", "category": "Birthday", "location": "Damansara", "exif": "35mm f/1.4"}, {"src": "images/frame-18.svg", "title": "Garden Table", "category": "Birthday", "location": "Mont Kiara", "exif": "50mm f/1.8"}, {"src": "images/frame-19.svg", "title": "Confetti & Laughter", "category": "Birthday", "location": "Cyberjaya", "exif": "28mm f/2.0"}, {"src": "images/frame-20.svg", "title": "Midnight Polaroids", "category": "Birthday", "location": "Kuala Lumpur", "exif": "35mm f/1.8"}]};
+
+    function applySiteData(siteData) {
+      SITE_DATA = siteData;
+      PORTFOLIO_FRAMES = Array.isArray(SITE_DATA.frames) ? SITE_DATA.frames : [];
+      const customCats = Array.isArray(SITE_DATA.categories)
+        ? SITE_DATA.categories
+        : ['Corporate', 'Convocation', 'Fashion', 'Football', 'Birthday'];
+
+      CATEGORIES = ['All', ...customCats];
+      BOOKING_NICHES = [...customCats];
+      selectedBookingNiche = BOOKING_NICHES[0] || 'Corporate';
+
+      hydrateProfile(SITE_DATA.profile);
+      renderCategoryNav();
+      renderGallery();
+      renderDrawerPills();
+    }
+
+    async function initPortfolio() {
+      try {
+        const response = await fetch('./data.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Failed to load data.json');
+        const loaded = await response.json();
+        applySiteData(loaded);
+      } catch (err) {
+        console.warn('Falling back to embedded preview data (e.g. file:// mode):', err);
+        applySiteData(FALLBACK_DATA);
+      }
+    }
+
+    initPortfolio();
+  </script>
+</body>
+</html>

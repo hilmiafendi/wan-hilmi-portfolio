@@ -1,0 +1,166 @@
+{
+  "profile": {
+    "pageTitle": "WAN HILMI — PHOTOGRAPHY",
+    "metaDescription": "Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Football, and Birthdays in Cyberjaya & Kuala Lumpur.",
+    "brandName": "WAN HILMI",
+    "fullName": "Wan Muhammad Hilmi",
+    "copyrightYear": "2026",
+    "locationShort": "CYBERJAYA / KUALA LUMPUR",
+    "locationFull": "Cyberjaya & Kuala Lumpur, MY",
+    "bioParagraph1": "Wan Muhammad Hilmi is a documentary and commercial photographer based between Cyberjaya and Kuala Lumpur.",
+    "bioParagraph2": "His work focuses on unscripted human presence across corporate summits, university convocations, editorial fashion, pitchside football, and private celebrations.",
+    "bioParagraph3": "Available for editorial commissions, brand campaigns, and event coverage across Malaysia and Southeast Asia.",
+    "whatsappNumber": "60106540039",
+    "email": "wan.mohd.hilmi@gmail.com",
+    "instagramUrl": "https://instagram.com"
+  },
+  "categories": [
+    "Corporate",
+    "Convocation",
+    "Fashion",
+    "Football",
+    "Birthday"
+  ],
+  "frames": [
+    {
+      "src": "images/frame-01.svg",
+      "title": "Keynote Address at Nexus",
+      "category": "Corporate",
+      "location": "Kuala Lumpur",
+      "exif": "35mm f/1.8"
+    },
+    {
+      "src": "images/frame-02.svg",
+      "title": "Boardroom Dialogue",
+      "category": "Corporate",
+      "location": "Cyberjaya",
+      "exif": "50mm f/2.0"
+    },
+    {
+      "src": "images/frame-03.svg",
+      "title": "Annual Tech Summit",
+      "category": "Corporate",
+      "location": "KLCC",
+      "exif": "24-70mm f/2.8"
+    },
+    {
+      "src": "images/frame-04.svg",
+      "title": "Executive Portrait",
+      "category": "Corporate",
+      "location": "Putrajaya",
+      "exif": "85mm f/1.4"
+    },
+    {
+      "src": "images/frame-05.svg",
+      "title": "Morning Procession",
+      "category": "Convocation",
+      "location": "Cyberjaya",
+      "exif": "50mm f/1.4"
+    },
+    {
+      "src": "images/frame-06.svg",
+      "title": "Tassel Turn",
+      "category": "Convocation",
+      "location": "Bangi",
+      "exif": "85mm f/1.8"
+    },
+    {
+      "src": "images/frame-07.svg",
+      "title": "Family Tribute",
+      "category": "Convocation",
+      "location": "Serdang",
+      "exif": "35mm f/2.0"
+    },
+    {
+      "src": "images/frame-08.svg",
+      "title": "Chancellor Hall Steps",
+      "category": "Convocation",
+      "location": "Shah Alam",
+      "exif": "24mm f/2.8"
+    },
+    {
+      "src": "images/frame-09.svg",
+      "title": "Monochrome Linen Study",
+      "category": "Fashion",
+      "location": "Zhongshan Building",
+      "exif": "50mm f/1.4"
+    },
+    {
+      "src": "images/frame-10.svg",
+      "title": "Late Afternoon Silk",
+      "category": "Fashion",
+      "location": "Bangsar",
+      "exif": "85mm f/1.4"
+    },
+    {
+      "src": "images/frame-11.svg",
+      "title": "Concrete & Tailoring",
+      "category": "Fashion",
+      "location": "Petaling Jaya",
+      "exif": "35mm f/2.0"
+    },
+    {
+      "src": "images/frame-12.svg",
+      "title": "Backstage Quiet",
+      "category": "Fashion",
+      "location": "Kuala Lumpur",
+      "exif": "50mm f/1.8"
+    },
+    {
+      "src": "images/frame-13.svg",
+      "title": "Floodlight Counterattack",
+      "category": "Football",
+      "location": "Bukit Jalil",
+      "exif": "70-200mm f/2.8"
+    },
+    {
+      "src": "images/frame-14.svg",
+      "title": "Halftime Huddle",
+      "category": "Football",
+      "location": "Cheras",
+      "exif": "35mm f/1.8"
+    },
+    {
+      "src": "images/frame-15.svg",
+      "title": "Touchline Sprint",
+      "category": "Football",
+      "location": "Shah Alam",
+      "exif": "200mm f/2.8"
+    },
+    {
+      "src": "images/frame-16.svg",
+      "title": "Final Whistle",
+      "category": "Football",
+      "location": "Subang Jaya",
+      "exif": "85mm f/1.8"
+    },
+    {
+      "src": "images/frame-17.svg",
+      "title": "Candlelight Toast",
+      "category": "Birthday",
+      "location": "Damansara",
+      "exif": "35mm f/1.4"
+    },
+    {
+      "src": "images/frame-18.svg",
+      "title": "Garden Table",
+      "category": "Birthday",
+      "location": "Mont Kiara",
+      "exif": "50mm f/1.8"
+    },
+    {
+      "src": "images/frame-19.svg",
+      "title": "Confetti & Laughter",
+      "category": "Birthday",
+      "location": "Cyberjaya",
+      "exif": "28mm f/2.0"
+    },
+    {
+      "src": "images/frame-20.svg",
+      "title": "Midnight Polaroids",
+      "category": "Birthday",
+      "location": "Kuala Lumpur",
+      "exif": "35mm f/1.8"
+    }
+  ]
+}
