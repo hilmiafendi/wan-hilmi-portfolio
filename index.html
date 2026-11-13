@@ -1,15 +1,16 @@
+```html
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HILMI PHOTOGRAPHY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>HILMI PHOTOGRAPHY — Selected Works</title>
   <meta id="meta-desc" name="description" content="Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Sports, and Birthdays in Cyberjaya & Kuala Lumpur." />
 
-  <!-- Editorial Typography: Plus Jakarta Sans & IBM Plex Mono -->
+  <!-- Editorial Typography: Instrument Serif, Plus Jakarta Sans & IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN with Class-Based Dark Mode -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,14 +21,18 @@
         extend: {
           fontFamily: {
             sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Instrument Serif', 'Georgia', 'serif'],
             mono: ['IBM Plex Mono', 'monospace'],
           },
           colors: {
-            alabaster: '#FAFAFA',
-            obsidian: '#0B0B0C',
-            charcoal: '#111111',
-            hairline: '#E5E5E5',
-            hairlineDark: '#1F1F22',
+            alabaster: '#FAF9F6',
+            obsidian: '#09090B',
+            charcoal: '#121214',
+            surfaceLight: '#F2F0EC',
+            surfaceDark: '#121215',
+            hairline: '#E4E2DD',
+            hairlineDark: '#222226',
+            accentGold: '#C5A880',
           },
         },
       },
@@ -35,11 +40,17 @@
   </script>
 
   <style>
+    :root {
+      color-scheme: light dark;
+    }
+
     body {
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
+    /* Hide Scrollbars on Horizontal Filter Bars */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -48,7 +59,10 @@
       scrollbar-width: none;
     }
 
-    /* Editorial 3-Column Masonry Grid */
+    /* ===================================================================
+     * ADAPTIVE GALLERY LAYOUT MODES (MASONRY / 2-COL / CONTACT SHEET)
+     * =================================================================== */
+    /* Mode 1: Editorial Masonry (Default) */
     .gallery-masonry {
       column-count: 1;
       column-gap: 1.5rem;
@@ -65,21 +79,62 @@
         column-gap: 2.5rem;
       }
     }
-
     .gallery-masonry .gallery-item {
       break-inside: avoid;
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
     }
     @media (min-width: 1024px) {
       .gallery-masonry .gallery-item {
-        margin-bottom: 2.5rem;
+        margin-bottom: 2.75rem;
       }
     }
 
-    /* Minimal Hairline Underline Indicator */
+    /* Mode 2: Exhibition 2-Column Large Format */
+    .gallery-exhibition {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 2.25rem;
+    }
+    @media (min-width: 640px) {
+      .gallery-exhibition {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2.75rem;
+        align-items: start;
+      }
+    }
+
+    /* Mode 3: Contact Sheet Index (2-Col Mobile, 4-Col Desktop) */
+    .gallery-index {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .gallery-index {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.75rem;
+      }
+    }
+    @media (min-width: 1200px) {
+      .gallery-index {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 2rem;
+      }
+    }
+    .gallery-index .gallery-img-wrap {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+    }
+    .gallery-index .gallery-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Desktop Filter Hairline Indicator */
     .filter-btn {
       position: relative;
-      padding-bottom: 3px;
+      padding-bottom: 4px;
     }
     .filter-btn::after {
       content: '';
@@ -87,11 +142,11 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      height: 1px;
+      height: 1.5px;
       background-color: currentColor;
       transform: scaleX(0);
       transform-origin: right;
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .filter-btn.is-active::after,
     .filter-btn:hover::after {
@@ -99,98 +154,222 @@
       transform-origin: left;
     }
 
+    /* Staggered Card Reveal Animation */
+    @keyframes frameReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-frame {
+      animation: frameReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+
+    /* Subtle Shimmer Placeholder while Images Load */
+    @keyframes pulseShimmer {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.85; }
+    }
+    .img-loading {
+      animation: pulseShimmer 1.8s ease-in-out infinite;
+    }
+
+    /* Smooth Drawer & Modal Transitions */
     #lightbox,
     #info-drawer-backdrop,
-    #admin-drawer-backdrop {
-      transition: opacity 0.25s ease, visibility 0.25s ease;
+    #admin-drawer-backdrop,
+    #confirm-modal-backdrop {
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #info-drawer-panel,
     #admin-drawer-panel {
-      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #lb-image {
+      transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
   </style>
 </head>
-<body class="bg-alabaster text-charcoal dark:bg-obsidian dark:text-neutral-100 font-sans transition-colors duration-300 selection:bg-charcoal selection:text-alabaster dark:selection:bg-neutral-100 dark:selection:text-obsidian">
+<body class="bg-alabaster text-charcoal dark:bg-obsidian dark:text-neutral-100 font-sans transition-colors duration-300 selection:bg-charcoal selection:text-alabaster dark:selection:bg-neutral-100 dark:selection:text-obsidian min-h-screen flex flex-col">
 
   <!-- ===================================================================== -->
-  <!-- 1. ULTRA-MINIMAL SINGLE-ROW STICKY HEADER                             -->
+  <!-- 1. ULTRA-MINIMAL STICKY HEADER (DESKTOP + MOBILE ADAPTIVE)            -->
   <!-- ===================================================================== -->
-  <header class="sticky top-0 z-40 bg-alabaster/95 dark:bg-obsidian/95 backdrop-blur-sm border-b border-hairline dark:border-hairlineDark transition-colors duration-300">
-    <div class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 h-14 sm:h-16 flex items-center justify-between gap-4">
-      <a
-        href="#"
-        id="wordmark-reset"
-        class="shrink-0 text-[11px] sm:text-xs font-medium tracking-[0.24em] uppercase hover:opacity-55 transition-opacity"
-      >
-        HILMI VISUALS 2026
-      </a>
+  <header class="sticky top-0 z-40 bg-alabaster/90 dark:bg-obsidian/90 backdrop-blur-md border-b border-hairline dark:border-hairlineDark transition-colors duration-300">
+    <div class="max-w-[1680px] mx-auto px-4 sm:px-8 lg:px-14 h-14 sm:h-16 flex items-center justify-between gap-3">
+      
+      <!-- Brand Wordmark & Live Pulse Indicator -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a
+          href="#"
+          id="wordmark-reset"
+          class="text-[11px] sm:text-xs font-semibold tracking-[0.24em] uppercase hover:opacity-65 transition-opacity flex items-center gap-2.5"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-charcoal dark:bg-neutral-100 inline-block"></span>
+          <span id="wordmark-text">HILMI VISUALS 2026</span>
+        </a>
+      </div>
 
+      <!-- Desktop Category Filter Navigation -->
       <nav
         id="desktop-filters"
         aria-label="Category Filters"
-        class="hidden md:flex items-center gap-7 lg:gap-9 text-[11px] tracking-[0.14em] uppercase"
+        class="hidden lg:flex items-center gap-7 xl:gap-9 text-[11px] tracking-[0.14em] uppercase"
       ></nav>
 
-      <div class="shrink-0 flex items-center gap-4 sm:gap-6 text-[11px] tracking-[0.16em] uppercase">
+      <!-- Right Utility Controls -->
+      <div class="shrink-0 flex items-center gap-2.5 sm:gap-4 text-[11px] tracking-[0.15em] uppercase">
+        <!-- Secret Admin Studio Button (Shown when 5-tap unlocked) -->
         <button
           type="button"
           id="open-admin-btn"
-          class="hidden font-mono text-[10px] px-2.5 py-1 border border-charcoal dark:border-neutral-100 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian"
+          class="hidden font-mono text-[10px] px-2.5 py-1.5 rounded-sm border border-emerald-500/60 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 transition-colors"
         >
-          [ Edit Studio ]
+          [ Studio Unlocked ]
         </button>
 
+        <!-- Theme Switcher -->
         <button
           type="button"
           id="theme-toggle"
           aria-label="Toggle Light or Dark Theme"
-          class="font-mono text-[10px] text-neutral-500 hover:text-charcoal dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+          class="font-mono text-[10px] px-2.5 py-1.5 rounded-sm border border-hairline dark:border-hairlineDark text-neutral-600 hover:text-charcoal dark:text-neutral-400 dark:hover:text-neutral-100 hover:border-charcoal/40 dark:hover:border-neutral-500 transition-all"
         >
-          [ Dark ]
+          [ Light ]
         </button>
 
+        <!-- Info & Contact Trigger Pill -->
         <button
           type="button"
           id="open-drawer-btn"
-          class="hover:opacity-55 transition-opacity"
+          class="px-3.5 py-1.5 rounded-sm bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[10px] tracking-[0.16em] uppercase hover:opacity-85 transition-opacity flex items-center gap-1.5"
         >
-          Info &amp; Contact
+          <span>Info &amp; Book</span>
+          <span class="text-[9px]">&nearr;</span>
         </button>
       </div>
     </div>
 
-    <nav
-      id="mobile-filters"
-      aria-label="Mobile Category Filters"
-      class="md:hidden flex items-center gap-6 px-5 h-10 overflow-x-auto no-scrollbar border-t border-hairline dark:border-hairlineDark text-[11px] tracking-[0.14em] uppercase"
-    ></nav>
+    <!-- Mobile & Tablet Horizontal Scrollable Category Bar -->
+    <div class="lg:hidden border-t border-hairline dark:border-hairlineDark bg-alabaster/95 dark:bg-obsidian/95">
+      <nav
+        id="mobile-filters"
+        aria-label="Mobile Category Filters"
+        class="flex items-center gap-2 px-4 py-2.5 overflow-x-auto no-scrollbar text-[11px] tracking-[0.13em] uppercase"
+      ></nav>
+    </div>
   </header>
 
   <!-- ===================================================================== -->
-  <!-- 2. IMMEDIATE EDITORIAL MASONRY GALLERY (90%+ VIEWPORT DOMINANCE)      -->
+  <!-- 2. EDITORIAL EXHIBITION MASTHEAD & ARCHIVE CONTROLS                   -->
   <!-- ===================================================================== -->
-  <main class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 pt-6 sm:pt-8 pb-20 sm:pb-28">
-    <div class="flex items-center justify-between pb-5 sm:pb-7 text-[10px] font-mono tracking-[0.16em] uppercase text-neutral-400 dark:text-neutral-500">
-      <span id="archive-status">LOADING ARCHIVE...</span>
-      <span id="header-location">CYBERJAYA / KUALA LUMPUR</span>
-    </div>
+  <main class="flex-1 max-w-[1680px] w-full mx-auto px-4 sm:px-8 lg:px-14 pt-6 sm:pt-10 pb-20 sm:pb-28">
+    
+    <!-- Editorial Masthead Banner -->
+    <section class="pb-6 sm:pb-9 mb-6 sm:mb-9 border-b border-hairline dark:border-hairlineDark">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-5">
+        
+        <!-- Left: Dynamic Exhibition Title & Curatorial Statement -->
+        <div class="space-y-2 max-w-2xl">
+          <div class="flex flex-wrap items-center gap-2.5 text-[10px] font-mono tracking-[0.18em] uppercase text-neutral-500 dark:text-neutral-400">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-surfaceLight dark:bg-surfaceDark border border-hairline dark:border-hairlineDark text-charcoal dark:text-neutral-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Available for Commissions</span>
+            </span>
+            <span>&bull;</span>
+            <span id="header-location">CYBERJAYA / KUALA LUMPUR</span>
+          </div>
 
+          <h1 class="font-serif italic text-3xl sm:text-5xl lg:text-[54px] leading-[1.05] tracking-tight text-charcoal dark:text-neutral-100">
+            <span id="masthead-title">Selected Works</span>
+            <span id="masthead-subtitle" class="not-italic font-sans font-light text-base sm:text-xl text-neutral-500 dark:text-neutral-400 ml-1 sm:ml-2">
+              — Documentary &amp; Commercial Archive
+            </span>
+          </h1>
+        </div>
+
+        <!-- Right: Archive Counter & View Density Switcher -->
+        <div class="flex flex-wrap items-center justify-between md:justify-end gap-4 pt-2 md:pt-0 border-t md:border-t-0 border-hairline dark:border-hairlineDark">
+          <span id="archive-status" class="text-[10px] sm:text-[11px] font-mono tracking-[0.16em] uppercase text-neutral-500 dark:text-neutral-400">
+            LOADING ARCHIVE...
+          </span>
+
+          <!-- Layout Density Switcher (Masonry / 2-Col / Index Grid) -->
+          <div class="inline-flex items-center rounded-sm border border-hairline dark:border-hairlineDark p-0.5 bg-surfaceLight/70 dark:bg-surfaceDark/70 font-mono text-[10px] uppercase tracking-[0.12em]">
+            <button
+              type="button"
+              data-view-mode="masonry"
+              class="view-mode-btn px-2.5 py-1 rounded-sm bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian transition-all"
+              title="3-Column Editorial Masonry"
+            >
+              Masonry
+            </button>
+            <button
+              type="button"
+              data-view-mode="exhibition"
+              class="view-mode-btn hidden sm:inline-block px-2.5 py-1 rounded-sm text-neutral-500 hover:text-charcoal dark:hover:text-neutral-200 transition-all"
+              title="Large 2-Column Exhibition"
+            >
+              2-Col
+            </button>
+            <button
+              type="button"
+              data-view-mode="index"
+              class="view-mode-btn px-2.5 py-1 rounded-sm text-neutral-500 hover:text-charcoal dark:hover:text-neutral-200 transition-all"
+              title="Compact Contact Sheet Grid"
+            >
+              Index
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Gallery Container -->
     <section
       id="gallery-container"
       aria-label="Selected Works"
       class="gallery-masonry transition-opacity duration-200"
     ></section>
+
+    <!-- Bottom Editorial Callout (Assists Mobile & Desktop Conversion) -->
+    <section class="mt-16 sm:mt-24 pt-10 sm:pt-14 border-t border-hairline dark:border-hairlineDark flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
+          Next Assignment
+        </p>
+        <h2 class="font-serif italic text-2xl sm:text-3xl text-charcoal dark:text-neutral-100">
+          Planning a corporate summit, convocation, campaign, or private event?
+        </h2>
+      </div>
+      <button
+        type="button"
+        id="bottom-inquire-btn"
+        class="w-full sm:w-auto shrink-0 px-6 py-3.5 rounded-sm border border-charcoal dark:border-neutral-100 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity flex items-center justify-center gap-3"
+      >
+        <span>Check Availability &amp; Rates</span>
+        <span>&rarr;</span>
+      </button>
+    </section>
   </main>
 
   <!-- ===================================================================== -->
-  <!-- 3. SINGLE-LINE MINIMALIST FOOTER (5-TAP SECRET TRIGGER ON COPYRIGHT)  -->
+  <!-- 3. MINIMALIST FOOTER (5-TAP SECRET TRIGGER ON COPYRIGHT)              -->
   <!-- ===================================================================== -->
-  <footer class="border-t border-hairline dark:border-hairlineDark">
-    <div class="max-w-[1680px] mx-auto px-5 sm:px-10 lg:px-14 py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] font-mono tracking-[0.12em] uppercase text-neutral-500 dark:text-neutral-400">
-      <span
-        id="footer-copyright"
-        class="select-none cursor-default"
-      >&copy; 2026 WAN MUHAMMAD HILMI</span>
+  <footer class="border-t border-hairline dark:border-hairlineDark bg-surfaceLight/40 dark:bg-surfaceDark/40">
+    <div class="max-w-[1680px] mx-auto px-4 sm:px-8 lg:px-14 py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] font-mono tracking-[0.12em] uppercase text-neutral-500 dark:text-neutral-400">
+      <div class="flex items-center gap-3">
+        <span
+          id="footer-copyright"
+          title="Tap 5 times for Studio Mode"
+          class="select-none cursor-default hover:text-charcoal dark:hover:text-neutral-200 transition-colors"
+        >&copy; 2026 WAN MUHAMMAD HILMI</span>
+      </div>
 
       <div class="flex flex-wrap items-center gap-5 sm:gap-7">
         <a
@@ -223,45 +402,59 @@
   </footer>
 
   <!-- ===================================================================== -->
-  <!-- 4. MINIMAL SLIDE-OVER DRAWER FOR "INFO & CONTACT"                     -->
+  <!-- 4. SLIDE-OVER DRAWER FOR "INFO & CONTACT"                             -->
   <!-- ===================================================================== -->
   <div
     id="info-drawer-backdrop"
     aria-hidden="true"
-    class="fixed inset-0 z-50 bg-black/25 dark:bg-black/60 backdrop-blur-[2px] opacity-0 invisible pointer-events-none flex justify-end"
+    class="fixed inset-0 z-50 bg-black/50 dark:bg-black/75 backdrop-blur-sm opacity-0 invisible pointer-events-none flex justify-end"
   >
     <aside
       id="info-drawer-panel"
       role="dialog"
       aria-modal="true"
       aria-label="Info and Contact"
-      class="w-full max-w-md h-full bg-alabaster dark:bg-obsidian border-l border-hairline dark:border-hairlineDark p-7 sm:p-10 flex flex-col justify-between translate-x-full overflow-y-auto"
+      class="w-full max-w-lg h-full bg-alabaster dark:bg-obsidian border-l border-hairline dark:border-hairlineDark p-6 sm:p-10 flex flex-col justify-between translate-x-full overflow-y-auto"
     >
       <div>
-        <div class="flex items-center justify-between pb-6 border-b border-hairline dark:border-hairlineDark">
-          <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-400">
-            Info &amp; Bookings
-          </span>
+        <!-- Drawer Top Header -->
+        <div class="flex items-center justify-between pb-5 border-b border-hairline dark:border-hairlineDark">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+              Biography &amp; Bookings
+            </span>
+          </div>
           <button
             type="button"
             id="close-drawer-btn"
             aria-label="Close Info Drawer"
-            class="font-mono text-[11px] uppercase tracking-[0.16em] hover:opacity-55 transition-opacity"
+            class="px-2.5 py-1 rounded-sm border border-hairline dark:border-hairlineDark font-mono text-[11px] uppercase tracking-[0.14em] hover:border-charcoal dark:hover:border-neutral-300 transition-colors"
           >
             [ Close &times; ]
           </button>
         </div>
 
-        <div class="mt-8 space-y-4 text-sm leading-relaxed font-light text-neutral-700 dark:text-neutral-300">
-          <p id="bio-p1"></p>
-          <p id="bio-p2"></p>
-          <p id="bio-p3"></p>
+        <!-- Photographer Editorial Bio -->
+        <div class="mt-7">
+          <h3 class="font-serif italic text-3xl text-charcoal dark:text-neutral-100 mb-4">
+            Unscripted human presence, framed with editorial precision.
+          </h3>
+          <div class="space-y-4 text-sm leading-relaxed font-light text-neutral-700 dark:text-neutral-300">
+            <p id="bio-p1"></p>
+            <p id="bio-p2"></p>
+            <p id="bio-p3"></p>
+          </div>
         </div>
 
-        <div class="mt-10 pt-8 border-t border-hairline dark:border-hairlineDark">
-          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 mb-3.5">
-            Select Assignment Type
-          </p>
+        <!-- Interactive Assignment Selector -->
+        <div class="mt-8 pt-7 border-t border-hairline dark:border-hairlineDark">
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400">
+              1. Select Assignment Discipline
+            </p>
+            <span class="font-mono text-[10px] text-emerald-600 dark:text-emerald-400">Instant WhatsApp Brief</span>
+          </div>
           <div id="drawer-niche-pills" class="flex flex-wrap gap-2"></div>
 
           <a
@@ -269,7 +462,7 @@
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-6 w-full py-3.5 px-5 border border-charcoal dark:border-neutral-200 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian text-xs font-mono uppercase tracking-[0.16em] flex items-center justify-between hover:opacity-85 transition-opacity"
+            class="mt-6 w-full py-4 px-5 rounded-sm border border-charcoal dark:border-neutral-100 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian text-xs font-mono uppercase tracking-[0.16em] flex items-center justify-between hover:opacity-90 transition-opacity"
           >
             <span>Inquire via WhatsApp</span>
             <span>&nearr;</span>
@@ -277,23 +470,29 @@
         </div>
       </div>
 
-      <div class="mt-10 pt-6 border-t border-hairline dark:border-hairlineDark space-y-4 text-xs">
-        <div class="flex items-center justify-between">
+      <!-- Drawer Footer Metadata -->
+      <div class="mt-10 pt-6 border-t border-hairline dark:border-hairlineDark space-y-3.5 text-xs">
+        <div class="flex items-center justify-between gap-2">
           <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Direct Email</span>
           <button
             type="button"
             id="copy-email-btn"
             data-email=""
-            class="font-mono text-[11px] hover:opacity-60 transition-opacity underline underline-offset-4"
+            class="font-mono text-[11px] hover:opacity-70 transition-opacity underline underline-offset-4 text-right"
           >
             <span id="email-text"></span>
             <span id="copy-badge" class="ml-1.5 text-neutral-400">[Copy]</span>
           </button>
         </div>
 
-        <div class="flex items-center justify-between">
-          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Base</span>
-          <span id="drawer-location" class="text-neutral-600 dark:text-neutral-300"></span>
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Primary Base</span>
+          <span id="drawer-location" class="font-mono text-[11px] text-neutral-600 dark:text-neutral-300 text-right"></span>
+        </div>
+
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Turnaround</span>
+          <span class="font-mono text-[11px] text-neutral-600 dark:text-neutral-300 text-right">24h Highlights / 5–7 Days Full Archive</span>
         </div>
       </div>
     </aside>
@@ -305,7 +504,7 @@
   <div
     id="admin-drawer-backdrop"
     aria-hidden="true"
-    class="fixed inset-0 z-50 bg-black/40 dark:bg-black/70 backdrop-blur-[2px] opacity-0 invisible pointer-events-none flex justify-end"
+    class="fixed inset-0 z-50 bg-black/55 dark:bg-black/80 backdrop-blur-sm opacity-0 invisible pointer-events-none flex justify-end"
   >
     <aside
       id="admin-drawer-panel"
@@ -323,29 +522,29 @@
               Admin Studio
             </span>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2.5">
             <button
               type="button"
               id="admin-exit-mode-btn"
-              class="font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-400 hover:text-charcoal dark:hover:text-neutral-100"
+              class="px-2 py-1 rounded-sm border border-hairline dark:border-hairlineDark font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-500 hover:text-charcoal dark:hover:text-neutral-100"
             >
               [ Lock ]
             </button>
             <button
               type="button"
               id="close-admin-btn"
-              class="font-mono text-[11px] uppercase tracking-[0.16em] hover:opacity-55"
+              class="px-2 py-1 rounded-sm border border-hairline dark:border-hairlineDark font-mono text-[11px] uppercase tracking-[0.16em] hover:opacity-65"
             >
               [ Close &times; ]
             </button>
           </div>
         </div>
 
-        <!-- Status Banner -->
-        <div id="admin-toast" class="hidden mt-4 px-3.5 py-2.5 border border-hairline dark:border-hairlineDark font-mono text-[11px]"></div>
+        <!-- Status Toast Banner -->
+        <div id="admin-toast" class="hidden mt-4 px-3.5 py-2.5 rounded-sm border border-hairline dark:border-hairlineDark font-mono text-[11px]"></div>
 
-        <!-- STEP A: GitHub Connection (Shown if not connected or when toggled) -->
-        <div id="admin-auth-box" class="mt-5 p-4 border border-hairline dark:border-hairlineDark bg-neutral-100/60 dark:bg-neutral-900/60 space-y-3">
+        <!-- STEP A: GitHub Connection -->
+        <div id="admin-auth-box" class="mt-5 p-4 rounded-sm border border-hairline dark:border-hairlineDark bg-surfaceLight/60 dark:bg-surfaceDark/60 space-y-3">
           <div class="flex items-center justify-between">
             <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500">
               GitHub Repo Sync
@@ -357,20 +556,20 @@
             type="text"
             id="gh-repo-input"
             placeholder="owner/repo (e.g. wanhilmi/photography)"
-            class="w-full px-3 py-2 text-xs font-mono bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+            class="w-full px-3 py-2 rounded-sm text-xs font-mono bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
           />
 
           <input
             type="password"
             id="gh-token-input"
-            placeholder="GitHub Fine-Grained Token (github_pat_...)"
-            class="w-full px-3 py-2 text-xs font-mono bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+            placeholder="GitHub Personal Access Token (ghp_... or github_pat_...)"
+            class="w-full px-3 py-2 rounded-sm text-xs font-mono bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
           />
 
           <button
             type="button"
             id="save-gh-creds-btn"
-            class="w-full py-2 px-4 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[11px] uppercase tracking-[0.14em] hover:opacity-85"
+            class="w-full py-2.5 px-4 rounded-sm bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[11px] uppercase tracking-[0.14em] hover:opacity-85 transition-opacity"
           >
             Connect Repository
           </button>
@@ -381,21 +580,21 @@
           <button
             type="button"
             data-admin-tab="upload"
-            class="admin-tab-btn pb-2.5 pr-5 border-b border-charcoal dark:border-neutral-100 font-medium"
+            class="admin-tab-btn pb-2.5 pr-4 border-b-2 border-charcoal dark:border-neutral-100 font-medium"
           >
             + Upload Photo
           </button>
           <button
             type="button"
             data-admin-tab="profile"
-            class="admin-tab-btn pb-2.5 px-5 text-neutral-400 hover:text-charcoal dark:hover:text-neutral-200"
+            class="admin-tab-btn pb-2.5 px-4 text-neutral-400 hover:text-charcoal dark:hover:text-neutral-200"
           >
             Profile &amp; Bio
           </button>
           <button
             type="button"
             data-admin-tab="categories"
-            class="admin-tab-btn pb-2.5 pl-5 text-neutral-400 hover:text-charcoal dark:hover:text-neutral-200"
+            class="admin-tab-btn pb-2.5 pl-4 text-neutral-400 hover:text-charcoal dark:hover:text-neutral-200"
           >
             Categories
           </button>
@@ -405,16 +604,16 @@
         <form id="admin-tab-upload" class="mt-5 space-y-4">
           <div>
             <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1.5">
-              Select Photo (Auto-compressed to crisp WebP/JPEG)
+              Select Photo (Auto-compressed to crisp 2000px JPEG)
             </label>
             <input
               type="file"
               id="upload-file-input"
               accept="image/*"
               required
-              class="w-full text-xs font-mono file:mr-3 file:py-2 file:px-3 file:border file:border-charcoal dark:file:border-neutral-200 file:bg-transparent file:text-xs file:font-mono file:uppercase file:cursor-pointer"
+              class="w-full text-xs font-mono file:mr-3 file:py-2 file:px-3 file:rounded-sm file:border file:border-charcoal dark:file:border-neutral-200 file:bg-transparent file:text-xs file:font-mono file:uppercase file:cursor-pointer"
             />
-            <img id="upload-preview" src="" alt="" class="hidden mt-3 max-h-44 w-auto object-contain border border-hairline dark:border-hairlineDark" />
+            <img id="upload-preview" src="" alt="Upload preview" class="hidden mt-3 max-h-44 w-auto object-contain rounded-sm border border-hairline dark:border-hairlineDark" />
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -427,7 +626,7 @@
                 id="upload-title"
                 placeholder="e.g. Touchline Sprint"
                 required
-                class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+                class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
               />
             </div>
 
@@ -437,7 +636,7 @@
               </label>
               <select
                 id="upload-category"
-                class="w-full px-3 py-2 text-xs bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+                class="w-full px-3 py-2 rounded-sm text-xs bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
               ></select>
             </div>
           </div>
@@ -451,7 +650,7 @@
                 type="text"
                 id="upload-location"
                 placeholder="e.g. Putrajaya"
-                class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+                class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
               />
             </div>
 
@@ -463,7 +662,7 @@
                 type="text"
                 id="upload-exif"
                 placeholder="e.g. 85mm f/1.4"
-                class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
+                class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark focus:outline-none focus:border-charcoal dark:focus:border-neutral-200"
               />
             </div>
           </div>
@@ -471,7 +670,7 @@
           <button
             type="submit"
             id="publish-photo-btn"
-            class="w-full py-3.5 px-5 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity"
+            class="w-full py-3.5 px-5 rounded-sm bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity"
           >
             Publish Photo to Gallery &uarr;
           </button>
@@ -482,57 +681,57 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Brand Wordmark</label>
-              <input type="text" id="edit-brandName" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="text" id="edit-brandName" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Full Name (Footer)</label>
-              <input type="text" id="edit-fullName" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="text" id="edit-fullName" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Header Location</label>
-              <input type="text" id="edit-locationShort" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="text" id="edit-locationShort" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Drawer Base Location</label>
-              <input type="text" id="edit-locationFull" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="text" id="edit-locationFull" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
           </div>
 
           <div>
             <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Bio Paragraph 1</label>
-            <textarea id="edit-bio1" rows="2" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
+            <textarea id="edit-bio1" rows="2" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
           </div>
           <div>
             <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Bio Paragraph 2</label>
-            <textarea id="edit-bio2" rows="2" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
+            <textarea id="edit-bio2" rows="2" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
           </div>
           <div>
             <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Bio Paragraph 3</label>
-            <textarea id="edit-bio3" rows="2" class="w-full px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
+            <textarea id="edit-bio3" rows="2" class="w-full px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark"></textarea>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">WhatsApp</label>
-              <input type="text" id="edit-whatsapp" class="w-full px-3 py-2 text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="text" id="edit-whatsapp" class="w-full px-3 py-2 rounded-sm text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Email</label>
-              <input type="email" id="edit-email" class="w-full px-3 py-2 text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="email" id="edit-email" class="w-full px-3 py-2 rounded-sm text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
             <div>
               <label class="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400 mb-1">Instagram URL</label>
-              <input type="url" id="edit-instagram" class="w-full px-3 py-2 text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
+              <input type="url" id="edit-instagram" class="w-full px-3 py-2 rounded-sm text-xs font-mono bg-transparent border border-hairline dark:border-hairlineDark" />
             </div>
           </div>
 
           <button
             type="submit"
             id="save-profile-btn"
-            class="w-full py-3.5 px-5 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity"
+            class="w-full py-3.5 px-5 rounded-sm bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-xs uppercase tracking-[0.16em] hover:opacity-85 transition-opacity"
           >
             Save Profile Changes
           </button>
@@ -547,12 +746,12 @@
               type="text"
               id="new-category-label"
               placeholder="New category name (e.g. Motorsports)"
-              class="flex-1 px-3 py-2 text-xs bg-transparent border border-hairline dark:border-hairlineDark"
+              class="flex-1 px-3 py-2 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark"
             />
             <button
               type="button"
               id="add-category-btn"
-              class="px-4 py-2 bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[11px] uppercase tracking-[0.14em]"
+              class="px-4 py-2 rounded-sm bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian font-mono text-[11px] uppercase tracking-[0.14em]"
             >
               Add
             </button>
@@ -561,7 +760,7 @@
           <button
             type="button"
             id="save-categories-btn"
-            class="w-full py-3 px-5 border border-charcoal dark:border-neutral-200 font-mono text-xs uppercase tracking-[0.16em] hover:opacity-75"
+            class="w-full py-3 px-5 rounded-sm border border-charcoal dark:border-neutral-200 font-mono text-xs uppercase tracking-[0.16em] hover:opacity-75"
           >
             Save Categories to GitHub
           </button>
@@ -569,39 +768,80 @@
       </div>
 
       <p class="mt-8 pt-4 border-t border-hairline dark:border-hairlineDark font-mono text-[10px] text-neutral-400 leading-relaxed">
-        Tip: While Edit Mode is unlocked, hover or tap any photo card in the main gallery to delete it or move it to the top.
+        Tip: While Studio Mode is unlocked, each gallery card shows inline <strong>&uarr; Top</strong> and <strong>Delete</strong> controls.
       </p>
     </aside>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 6. DISTRACTION-FREE FULL-SCREEN LIGHTBOX                              -->
+  <!-- 6. CUSTOM NON-BLOCKING CONFIRMATION MODAL (REPLACES NATIVE CONFIRM)   -->
+  <!-- ===================================================================== -->
+  <div
+    id="confirm-modal-backdrop"
+    aria-hidden="true"
+    class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-xs opacity-0 invisible pointer-events-none flex items-center justify-center p-4"
+  >
+    <div class="w-full max-w-sm bg-alabaster dark:bg-obsidian border border-hairline dark:border-hairlineDark p-6 rounded-sm shadow-2xl space-y-5">
+      <div class="space-y-1.5">
+        <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-red-500">Confirm Action</span>
+        <p id="confirm-modal-message" class="text-sm text-charcoal dark:text-neutral-200 leading-relaxed"></p>
+      </div>
+      <div class="flex items-center justify-end gap-3 font-mono text-[11px] uppercase tracking-[0.14em]">
+        <button
+          type="button"
+          id="confirm-cancel-btn"
+          class="px-4 py-2 rounded-sm border border-hairline dark:border-hairlineDark hover:border-charcoal dark:hover:border-neutral-400 transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="confirm-accept-btn"
+          class="px-4 py-2 rounded-sm bg-red-600 text-white hover:bg-red-700 transition-colors"
+        >
+          Remove Frame
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 7. FULL-SCREEN EXHIBITION LIGHTBOX (MOBILE & DESKTOP ERGONOMICS)      -->
   <!-- ===================================================================== -->
   <div
     id="lightbox"
     role="dialog"
     aria-modal="true"
     aria-label="Full-Screen Image Viewer"
-    class="fixed inset-0 z-50 bg-alabaster dark:bg-obsidian text-charcoal dark:text-neutral-100 flex flex-col justify-between p-5 sm:p-10 lg:p-12 opacity-0 invisible pointer-events-none"
+    class="fixed inset-0 z-50 bg-alabaster/98 dark:bg-obsidian/98 backdrop-blur-md text-charcoal dark:text-neutral-100 flex flex-col justify-between p-4 sm:p-8 lg:p-10 opacity-0 invisible pointer-events-none"
   >
-    <div class="flex items-center justify-between text-[11px] font-mono tracking-[0.16em] uppercase">
-      <span id="lb-counter" class="text-neutral-400">01 / 20</span>
+    <!-- Top Lightbox Bar -->
+    <div class="flex items-center justify-between text-[11px] font-mono tracking-[0.16em] uppercase z-10">
+      <div class="flex items-center gap-3">
+        <span id="lb-counter" class="px-2.5 py-1 rounded-sm bg-surfaceLight dark:bg-surfaceDark border border-hairline dark:border-hairlineDark text-charcoal dark:text-neutral-200">
+          01 / 09
+        </span>
+        <span id="lb-category-top" class="hidden sm:inline-block text-neutral-400"></span>
+      </div>
+
       <button
         type="button"
         id="lb-close"
         aria-label="Close Lightbox"
-        class="hover:opacity-55 transition-opacity"
+        class="px-3 py-1.5 rounded-sm border border-hairline dark:border-hairlineDark bg-surfaceLight/80 dark:bg-surfaceDark/80 hover:border-charcoal dark:hover:border-neutral-300 transition-colors"
       >
         [ Close &times; ]
       </button>
     </div>
 
-    <div class="relative flex-1 flex items-center justify-center my-4 sm:my-6 overflow-hidden select-none">
+    <!-- Center Viewport with Mobile + Desktop Prev/Next Controls -->
+    <div id="lb-stage" class="relative flex-1 flex items-center justify-center my-3 sm:my-5 overflow-hidden select-none">
+      <!-- Previous Button (Visible on both Mobile & Desktop) -->
       <button
         type="button"
         id="lb-prev"
         aria-label="Previous Frame"
-        class="hidden sm:flex items-center justify-center w-12 h-12 text-neutral-400 hover:text-current transition-colors mr-4 font-mono text-sm"
+        class="absolute left-1 sm:left-3 z-20 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-alabaster/80 dark:bg-obsidian/80 border border-hairline dark:border-hairlineDark text-charcoal dark:text-neutral-100 hover:scale-105 active:scale-95 transition-all font-mono text-sm shadow-sm"
       >
         &larr;
       </button>
@@ -610,36 +850,48 @@
         id="lb-image"
         src=""
         alt=""
-        class="max-h-[78vh] max-w-full w-auto h-auto object-contain"
+        class="max-h-[70vh] sm:max-h-[76vh] max-w-full w-auto h-auto object-contain rounded-xs shadow-sm"
       />
 
+      <!-- Next Button (Visible on both Mobile & Desktop) -->
       <button
         type="button"
         id="lb-next"
         aria-label="Next Frame"
-        class="hidden sm:flex items-center justify-center w-12 h-12 text-neutral-400 hover:text-current transition-colors ml-4 font-mono text-sm"
+        class="absolute right-1 sm:right-3 z-20 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-alabaster/80 dark:bg-obsidian/80 border border-hairline dark:border-hairlineDark text-charcoal dark:text-neutral-100 hover:scale-105 active:scale-95 transition-all font-mono text-sm shadow-sm"
       >
         &rarr;
       </button>
     </div>
 
-    <div class="border-t border-hairline dark:border-hairlineDark pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs">
-      <div class="flex items-center gap-2.5">
-        <span id="lb-title" class="font-normal"></span>
+    <!-- Bottom Technical EXIF & Direct Inquiry Strip -->
+    <div class="border-t border-hairline dark:border-hairlineDark pt-3.5 sm:pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs z-10">
+      <div class="flex flex-wrap items-baseline gap-2.5">
+        <span id="lb-title" class="font-serif italic text-xl sm:text-2xl text-charcoal dark:text-neutral-100"></span>
         <span class="text-neutral-400">/</span>
-        <span id="lb-category" class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400"></span>
+        <span id="lb-category" class="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400"></span>
       </div>
 
-      <div class="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
-        <span id="lb-exif"></span>
-        <span>&bull;</span>
-        <span id="lb-location"></span>
+      <div class="flex flex-wrap items-center justify-between sm:justify-end gap-4 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2.5">
+          <span id="lb-exif" class="px-2 py-0.5 rounded-xs bg-surfaceLight dark:bg-surfaceDark border border-hairline dark:border-hairlineDark"></span>
+          <span>&bull;</span>
+          <span id="lb-location"></span>
+        </div>
+
+        <button
+          type="button"
+          id="lb-inquire-btn"
+          class="text-charcoal dark:text-neutral-100 underline underline-offset-4 hover:opacity-65 transition-opacity"
+        >
+          Inquire Similar &nearr;
+        </button>
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 7. PORTFOLIO + 5-TAP SELF-EDITING ENGINE (data.json + images/)        -->
+  <!-- 8. PORTFOLIO + 5-TAP SELF-EDITING ENGINE (data.json + images/)        -->
   <!-- ===================================================================== -->
   <script>
     let SITE_DATA = null;
@@ -649,6 +901,7 @@
     let BOOKING_NICHES = [];
 
     let activeCategory = 'all';
+    let currentViewMode = 'masonry'; // 'masonry' | 'exhibition' | 'index'
     let selectedBookingNiche = 'corporate';
     let visibleFrames = [];
     let currentLightboxIndex = 0;
@@ -656,6 +909,17 @@
 
     const STORAGE_REPO_KEY = 'hilmi_admin_repo';
     const STORAGE_TOKEN_KEY = 'hilmi_admin_token';
+    const STORAGE_THEME_KEY = 'hilmi_portfolio_theme';
+
+    // Curatorial Subtitles per Category for the Editorial Masthead
+    const CATEGORY_SUBTITLES = {
+      all: '— Documentary & Commercial Archive',
+      corporate: '— Summits, Keynotes & Executive Leadership',
+      convocation: '— Academic Milestones & Ceremonial Portraits',
+      fashion: '— Editorial Streetwear, Studio & Lookbooks',
+      sports: '— Pitchside Floodlights & High-Velocity Action',
+      birthday: '— Intimate Gatherings & Private Celebrations',
+    };
 
     // DOM References
     const desktopFilters = document.getElementById('desktop-filters');
@@ -663,6 +927,8 @@
     const galleryContainer = document.getElementById('gallery-container');
     const archiveStatus = document.getElementById('archive-status');
     const themeToggleBtn = document.getElementById('theme-toggle');
+    const mastheadTitle = document.getElementById('masthead-title');
+    const mastheadSubtitle = document.getElementById('masthead-subtitle');
 
     // Lightbox References
     const lightbox = document.getElementById('lightbox');
@@ -670,6 +936,7 @@
     const lbCounter = document.getElementById('lb-counter');
     const lbTitle = document.getElementById('lb-title');
     const lbCategory = document.getElementById('lb-category');
+    const lbCategoryTop = document.getElementById('lb-category-top');
     const lbExif = document.getElementById('lb-exif');
     const lbLocation = document.getElementById('lb-location');
 
@@ -685,10 +952,43 @@
     const openAdminBtn = document.getElementById('open-admin-btn');
     const adminToast = document.getElementById('admin-toast');
 
+    // Custom Confirm Modal References
+    const confirmBackdrop = document.getElementById('confirm-modal-backdrop');
+    const confirmMessageEl = document.getElementById('confirm-modal-message');
+    const confirmAcceptBtn = document.getElementById('confirm-accept-btn');
+    const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+
+    function requestConfirmation(message) {
+      return new Promise((resolve) => {
+        confirmMessageEl.textContent = message;
+        confirmBackdrop.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+        confirmBackdrop.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+
+        const cleanup = (result) => {
+          confirmBackdrop.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+          confirmBackdrop.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+          confirmAcceptBtn.removeEventListener('click', onAccept);
+          confirmCancelBtn.removeEventListener('click', onCancel);
+          resolve(result);
+        };
+
+        const onAccept = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+
+        confirmAcceptBtn.addEventListener('click', onAccept);
+        confirmCancelBtn.addEventListener('click', onCancel);
+      });
+    }
+
     function getCategoryLabel(catId) {
       if (!catId) return '';
-      if (catId === 'all') return 'All';
+      if (catId === 'all') return 'All Works';
       return CATEGORY_MAP[catId] || catId;
+    }
+
+    function getCategoryCount(catId) {
+      if (catId === 'all') return PORTFOLIO_FRAMES.length;
+      return PORTFOLIO_FRAMES.filter((f) => f.category === catId).length;
     }
 
     function resolveImageSrc(src) {
@@ -701,13 +1001,17 @@
 
     function showAdminToast(msg, isError = false) {
       adminToast.textContent = msg;
-      adminToast.classList.remove('hidden', 'text-red-500', 'border-red-500');
-      if (isError) adminToast.classList.add('text-red-500', 'border-red-500');
-      setTimeout(() => adminToast.classList.add('hidden'), 5000);
+      adminToast.classList.remove('hidden', 'text-red-500', 'border-red-500', 'text-emerald-600', 'dark:text-emerald-400');
+      if (isError) {
+        adminToast.classList.add('text-red-500', 'border-red-500');
+      } else {
+        adminToast.classList.add('text-emerald-600', 'dark:text-emerald-400');
+      }
+      setTimeout(() => adminToast.classList.add('hidden'), 5500);
     }
 
     /* -------------------------------------------------------------------
-     * 5-TAP SECRET TRIGGER ON FOOTER COPYRIGHT
+     * 5-TAP SECRET TRIGGER ON FOOTER COPYRIGHT + KEYBOARD SHORTCUT
      * ------------------------------------------------------------------- */
     let tapCount = 0;
     let tapTimer = null;
@@ -731,7 +1035,7 @@
       clearTimeout(tapTimer);
       tapTimer = setTimeout(() => {
         tapCount = 0;
-      }, 1500);
+      }, 1600);
 
       if (tapCount >= 5) {
         tapCount = 0;
@@ -747,10 +1051,29 @@
     });
 
     /* -------------------------------------------------------------------
-     * GITHUB REST API HELPERS (READ/WRITE data.json & UPLOAD IMAGES)
+     * GITHUB REST API HELPERS (WITH ASCII HEADER SANITIZATION)
      * ------------------------------------------------------------------- */
+    function sanitizeToken(raw) {
+      if (!raw) return '';
+      return raw
+        .replace(/[^\x20-\x7E]/g, '')
+        .replace(/^Bearer\s+/i, '')
+        .replace(/\s+/g, '')
+        .trim();
+    }
+
+    function sanitizeRepo(raw) {
+      if (!raw) return '';
+      return raw
+        .replace(/[^\x20-\x7E]/g, '')
+        .replace(/^https?:\/\/github\.com\//i, '')
+        .replace(/\.git$/i, '')
+        .replace(/^\/+|\/+$/g, '')
+        .trim();
+    }
+
     function detectDefaultRepo() {
-      const saved = localStorage.getItem(STORAGE_REPO_KEY);
+      const saved = sanitizeRepo(localStorage.getItem(STORAGE_REPO_KEY));
       if (saved) return saved;
       const host = window.location.hostname;
       if (host.endsWith('.github.io')) {
@@ -763,8 +1086,8 @@
     }
 
     function getGitHubCreds() {
-      const repo = (localStorage.getItem(STORAGE_REPO_KEY) || '').trim();
-      const token = (localStorage.getItem(STORAGE_TOKEN_KEY) || '').trim();
+      const repo = sanitizeRepo(localStorage.getItem(STORAGE_REPO_KEY) || detectDefaultRepo());
+      const token = sanitizeToken(localStorage.getItem(STORAGE_TOKEN_KEY) || '');
       return { repo, token };
     }
 
@@ -773,9 +1096,7 @@
       const tokenInput = document.getElementById('gh-token-input');
       const statusEl = document.getElementById('admin-conn-status');
 
-      const repo = detectDefaultRepo();
-      const token = localStorage.getItem(STORAGE_TOKEN_KEY) || '';
-
+      const { repo, token } = getGitHubCreds();
       repoInput.value = repo;
       tokenInput.value = token;
 
@@ -785,20 +1106,22 @@
         statusEl.classList.add('text-emerald-600', 'dark:text-emerald-400');
       } else {
         statusEl.textContent = 'Not Connected';
+        statusEl.classList.add('text-neutral-400');
+        statusEl.classList.remove('text-emerald-600', 'dark:text-emerald-400');
       }
     }
 
     document.getElementById('save-gh-creds-btn').addEventListener('click', () => {
-      const repo = document.getElementById('gh-repo-input').value.trim();
-      const token = document.getElementById('gh-token-input').value.trim();
+      const repo = sanitizeRepo(document.getElementById('gh-repo-input').value);
+      const token = sanitizeToken(document.getElementById('gh-token-input').value);
       if (!repo || !token) {
-        showAdminToast('Enter both owner/repo and your GitHub token.', true);
+        showAdminToast('Enter both owner/repo and your GitHub Personal Access Token.', true);
         return;
       }
       localStorage.setItem(STORAGE_REPO_KEY, repo);
       localStorage.setItem(STORAGE_TOKEN_KEY, token);
       syncCredsUI();
-      showAdminToast('Repository connected. Ready to edit.');
+      showAdminToast('Repository connected & sanitized. Ready to publish.');
     });
 
     function utf8ToBase64(str) {
@@ -811,9 +1134,11 @@
     }
 
     async function githubGetFileSha(repo, token, filePath) {
-      const res = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+      const cleanToken = sanitizeToken(token);
+      const cleanRepo = sanitizeRepo(repo);
+      const res = await fetch(`https://api.github.com/repos/${cleanRepo}/contents/${filePath}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cleanToken}`,
           Accept: 'application/vnd.github.v3+json',
         },
       });
@@ -824,17 +1149,19 @@
     }
 
     async function githubPutFile(repo, token, filePath, base64Content, commitMessage) {
-      const sha = await githubGetFileSha(repo, token, filePath);
+      const cleanToken = sanitizeToken(token);
+      const cleanRepo = sanitizeRepo(repo);
+      const sha = await githubGetFileSha(cleanRepo, cleanToken, filePath);
       const body = {
         message: commitMessage,
         content: base64Content,
       };
       if (sha) body.sha = sha;
 
-      const res = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+      const res = await fetch(`https://api.github.com/repos/${cleanRepo}/contents/${filePath}`, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cleanToken}`,
           Accept: 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
         },
@@ -899,13 +1226,24 @@
     /* -------------------------------------------------------------------
      * THEME, PROFILE & NAVIGATION RENDERING
      * ------------------------------------------------------------------- */
+    function initTheme() {
+      const savedTheme = localStorage.getItem(STORAGE_THEME_KEY);
+      if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+      updateThemeLabel();
+    }
+
     function updateThemeLabel() {
       const isDark = document.documentElement.classList.contains('dark');
       themeToggleBtn.textContent = isDark ? '[ Light ]' : '[ Dark ]';
     }
 
     themeToggleBtn.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem(STORAGE_THEME_KEY, isDark ? 'dark' : 'light');
       updateThemeLabel();
     });
 
@@ -916,7 +1254,10 @@
       const metaDesc = document.getElementById('meta-desc');
       if (metaDesc && profile.metaDescription) metaDesc.setAttribute('content', profile.metaDescription);
 
-      document.getElementById('wordmark-reset').textContent = profile.brandName || 'WAN HILMI';
+      const wordmarkText = document.getElementById('wordmark-text');
+      if (wordmarkText) {
+        wordmarkText.textContent = profile.brandName || 'HILMI VISUALS 2026';
+      }
       document.getElementById('header-location').textContent = profile.locationShort || 'CYBERJAYA / KUALA LUMPUR';
 
       document.getElementById('bio-p1').textContent = profile.bioParagraph1 || '';
@@ -947,35 +1288,94 @@
     }
 
     function renderCategoryNav() {
-      const html = CATEGORIES.map((cat) => {
+      // Desktop Navigation with Subtle Superscript Frame Counts
+      desktopFilters.innerHTML = CATEGORIES.map((cat) => {
         const isActive = cat.id === activeCategory;
+        const count = String(getCategoryCount(cat.id)).padStart(2, '0');
         return `
           <button
             type="button"
             data-category="${cat.id}"
-            class="filter-btn shrink-0 transition-opacity ${
+            class="filter-btn shrink-0 transition-colors flex items-baseline gap-1 ${
               isActive
                 ? 'is-active text-charcoal dark:text-neutral-100 font-medium'
                 : 'text-neutral-400 hover:text-charcoal dark:text-neutral-500 dark:hover:text-neutral-200'
             }"
           >
-            ${cat.label}
+            <span>${cat.label}</span>
+            <span class="font-mono text-[9px] opacity-65">${count}</span>
           </button>
         `;
       }).join('');
 
-      desktopFilters.innerHTML = html;
-      mobileFilters.innerHTML = html;
+      // Mobile Pill Bar with Touch-Friendly Targets
+      mobileFilters.innerHTML = CATEGORIES.map((cat) => {
+        const isActive = cat.id === activeCategory;
+        const count = String(getCategoryCount(cat.id)).padStart(2, '0');
+        return `
+          <button
+            type="button"
+            data-category="${cat.id}"
+            class="mobile-filter-pill shrink-0 px-3 py-1.5 rounded-sm font-mono text-[10px] tracking-[0.14em] uppercase transition-all flex items-center gap-1.5 border ${
+              isActive
+                ? 'border-charcoal bg-charcoal text-alabaster dark:border-neutral-100 dark:bg-neutral-100 dark:text-obsidian font-medium'
+                : 'border-hairline dark:border-hairlineDark bg-surfaceLight/50 dark:bg-surfaceDark/50 text-neutral-500 dark:text-neutral-400'
+            }"
+          >
+            <span>${cat.label}</span>
+            <span class="opacity-60 text-[9px]">${count}</span>
+          </button>
+        `;
+      }).join('');
 
-      document.querySelectorAll('.filter-btn').forEach((btn) => {
-        btn.addEventListener('click', () => setCategory(btn.dataset.category));
+      document.querySelectorAll('[data-category]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          setCategory(btn.dataset.category);
+          btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
       });
     }
 
     /* -------------------------------------------------------------------
-     * GALLERY RENDERING (WITH INLINE ADMIN DELETE / MOVE-TOP CONTROLS)
+     * VIEW DENSITY SWITCHER (MASONRY / 2-COL EXHIBITION / INDEX GRID)
      * ------------------------------------------------------------------- */
+    document.querySelectorAll('.view-mode-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.viewMode;
+        if (!mode || mode === currentViewMode) return;
+        currentViewMode = mode;
+
+        document.querySelectorAll('.view-mode-btn').forEach((b) => {
+          const active = b.dataset.viewMode === currentViewMode;
+          b.className = `view-mode-btn ${b.dataset.viewMode === 'exhibition' ? 'hidden sm:inline-block' : ''} px-2.5 py-1 rounded-sm transition-all ${
+            active
+              ? 'bg-charcoal text-alabaster dark:bg-neutral-100 dark:text-obsidian'
+              : 'text-neutral-500 hover:text-charcoal dark:hover:text-neutral-200'
+          }`;
+        });
+
+        galleryContainer.classList.remove('gallery-masonry', 'gallery-exhibition', 'gallery-index');
+        galleryContainer.classList.add(`gallery-${currentViewMode}`);
+        renderGallery();
+      });
+    });
+
+    /* -------------------------------------------------------------------
+     * GALLERY RENDERING (ADAPTIVE MOBILE FOOTER + DESKTOP HOVER OVERLAY)
+     * ------------------------------------------------------------------- */
+    function updateMastheadCopy() {
+      if (activeCategory === 'all') {
+        mastheadTitle.textContent = 'Selected Works';
+      } else {
+        mastheadTitle.textContent = getCategoryLabel(activeCategory);
+      }
+      mastheadSubtitle.textContent =
+        CATEGORY_SUBTITLES[activeCategory] || `— Curated ${getCategoryLabel(activeCategory)} Series`;
+    }
+
     function renderGallery() {
+      updateMastheadCopy();
+
       visibleFrames =
         activeCategory === 'all'
           ? [...PORTFOLIO_FRAMES]
@@ -986,30 +1386,51 @@
 
       archiveStatus.textContent =
         visibleFrames.length === 0
-          ? 'NO FRAMES IN THIS CATEGORY'
+          ? '00 FRAMES IN ARCHIVE'
           : activeCategory === 'all'
-          ? `ARCHIVE — 01 TO ${countStr}`
+          ? `INDEX — 01 TO ${countStr}`
           : `${activeLabel} — ${countStr} FRAMES`;
+
+      if (visibleFrames.length === 0) {
+        galleryContainer.innerHTML = `
+          <div class="col-span-full py-20 text-center border border-dashed border-hairline dark:border-hairlineDark rounded-sm space-y-4">
+            <p class="font-serif italic text-2xl text-neutral-500 dark:text-neutral-400">No frames published in this category yet.</p>
+            <button
+              type="button"
+              id="reset-empty-filter"
+              class="px-4 py-2 rounded-sm border border-charcoal dark:border-neutral-200 font-mono text-[11px] uppercase tracking-[0.14em]"
+            >
+              Return to All Works
+            </button>
+          </div>
+        `;
+        document.getElementById('reset-empty-filter')?.addEventListener('click', () => setCategory('all'));
+        return;
+      }
+
+      const isIndexMode = currentViewMode === 'index';
 
       galleryContainer.innerHTML = visibleFrames
         .map((frame, index) => {
           const catLabel = getCategoryLabel(frame.category);
           const globalIndex = PORTFOLIO_FRAMES.indexOf(frame);
+          const frameNumber = String(index + 1).padStart(2, '0');
+          const delayMs = Math.min(index * 45, 360);
 
           const adminControls = isEditMode
             ? `
-              <div class="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+              <div class="absolute top-3 right-3 z-20 flex items-center gap-1.5">
                 <button
                   type="button"
                   data-move-top="${globalIndex}"
-                  class="px-2.5 py-1 bg-alabaster/95 dark:bg-obsidian/95 border border-hairline dark:border-hairlineDark font-mono text-[10px] uppercase tracking-[0.12em] hover:opacity-75"
+                  class="px-2.5 py-1 rounded-xs bg-alabaster/95 dark:bg-obsidian/95 border border-hairline dark:border-hairlineDark font-mono text-[10px] uppercase tracking-[0.12em] hover:opacity-80 shadow-sm"
                 >
                   &uarr; Top
                 </button>
                 <button
                   type="button"
                   data-delete-frame="${globalIndex}"
-                  class="px-2.5 py-1 bg-red-600 text-white font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-red-700"
+                  class="px-2.5 py-1 rounded-xs bg-red-600 text-white font-mono text-[10px] uppercase tracking-[0.12em] hover:bg-red-700 shadow-sm"
                 >
                   Delete
                 </button>
@@ -1020,19 +1441,54 @@
           return `
             <figure
               data-index="${index}"
-              class="gallery-item group relative overflow-hidden bg-neutral-100 dark:bg-neutral-900 cursor-zoom-in"
+              style="animation-delay: ${delayMs}ms"
+              class="gallery-item animate-frame group relative cursor-zoom-in"
             >
-              ${adminControls}
-              <img
-                src="${resolveImageSrc(frame.src)}"
-                alt="${frame.title} — ${catLabel} in ${frame.location || ''}"
-                loading="lazy"
-                class="w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
-              />
-              <figcaption class="absolute inset-x-0 bottom-0 px-4 py-3 bg-alabaster/95 dark:bg-obsidian/95 border-t border-hairline dark:border-hairlineDark translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out flex items-baseline justify-between gap-3">
+              <!-- Image Wrapper -->
+              <div class="gallery-img-wrap relative overflow-hidden rounded-xs bg-surfaceLight dark:bg-surfaceDark border border-hairline/60 dark:border-hairlineDark/60">
+                ${adminControls}
+
+                <!-- Subtle Corner Index Number on Desktop -->
+                <span class="hidden md:inline-block absolute top-3 left-3 z-10 px-2 py-0.5 rounded-xs bg-alabaster/80 dark:bg-obsidian/80 backdrop-blur-xs font-mono text-[10px] tracking-[0.14em] text-neutral-600 dark:text-neutral-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  ${frameNumber}
+                </span>
+
+                <img
+                  src="${resolveImageSrc(frame.src)}"
+                  alt="${frame.title} — ${catLabel} in ${frame.location || 'Malaysia'}"
+                  loading="lazy"
+                  onload="this.classList.remove('img-loading')"
+                  class="img-loading w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                />
+
+                <!-- Desktop Hover Editorial Overlay (Hidden in Contact Sheet Mode) -->
+                ${
+                  !isIndexMode
+                    ? `
+                <div class="hidden md:flex absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out items-end justify-between gap-3 text-white">
+                  <div class="truncate">
+                    <p class="font-serif italic text-xl leading-tight text-white">${frame.title}</p>
+                    <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-300 mt-0.5">
+                      ${catLabel}${frame.location ? ` &bull; ${frame.location}` : ''}
+                    </p>
+                  </div>
+                  <span class="shrink-0 font-mono text-[10px] px-2 py-0.5 rounded-xs bg-white/15 backdrop-blur-xs text-neutral-100">
+                    ${frame.exif || 'RAW'}
+                  </span>
+                </div>
+                `
+                    : ''
+                }
+              </div>
+
+              <!-- Permanent Architectural Caption Below Card (Always visible on Mobile & in Index Mode; subtle on Desktop) -->
+              <figcaption class="${
+                isIndexMode ? 'flex' : 'flex md:hidden'
+              } pt-2.5 px-0.5 items-baseline justify-between gap-2 text-xs">
                 <div class="truncate">
-                  <span class="text-xs font-normal text-charcoal dark:text-neutral-100">${frame.title}</span>
-                  <span class="ml-2 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-400">
+                  <span class="font-mono text-[10px] text-neutral-400 mr-1.5">${frameNumber}</span>
+                  <span class="font-medium text-charcoal dark:text-neutral-100">${frame.title}</span>
+                  <span class="block sm:inline sm:ml-2 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-500 dark:text-neutral-400">
                     ${catLabel}${frame.location ? ` &bull; ${frame.location}` : ''}
                   </span>
                 </div>
@@ -1045,6 +1501,7 @@
         })
         .join('');
 
+      // Open Lightbox on Card Click
       document.querySelectorAll('.gallery-item').forEach((item) => {
         item.addEventListener('click', (e) => {
           if (e.target.closest('[data-delete-frame]') || e.target.closest('[data-move-top]')) return;
@@ -1052,26 +1509,33 @@
         });
       });
 
+      // Delete Frame Handler (Uses Custom Non-Blocking Modal)
       document.querySelectorAll('[data-delete-frame]').forEach((btn) => {
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
           const idx = parseInt(btn.dataset.deleteFrame, 10);
           const target = PORTFOLIO_FRAMES[idx];
-          if (!target || !confirm(`Remove "${target.title}" from your portfolio?`)) return;
+          if (!target) return;
+
+          const confirmed = await requestConfirmation(`Remove "${target.title}" from your portfolio archive?`);
+          if (!confirmed) return;
 
           btn.textContent = '...';
           try {
             PORTFOLIO_FRAMES.splice(idx, 1);
             await commitUpdatedDataJson(`Remove photo: ${target.title}`);
+            renderCategoryNav();
             renderGallery();
             openAdminDrawer();
             showAdminToast(`Removed "${target.title}".`);
           } catch (err) {
             showAdminToast(err.message, true);
+            renderGallery();
           }
         });
       });
 
+      // Move Frame to Top Handler
       document.querySelectorAll('[data-move-top]').forEach((btn) => {
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
@@ -1084,8 +1548,10 @@
             PORTFOLIO_FRAMES.unshift(moved);
             await commitUpdatedDataJson(`Move photo to top: ${moved.title}`);
             renderGallery();
+            showAdminToast(`Moved "${moved.title}" to #01.`);
           } catch (err) {
             showAdminToast(err.message, true);
+            renderGallery();
           }
         });
       });
@@ -1100,7 +1566,7 @@
       setTimeout(() => {
         renderGallery();
         galleryContainer.style.opacity = '1';
-      }, 170);
+      }, 150);
     }
 
     document.getElementById('wordmark-reset').addEventListener('click', (e) => {
@@ -1115,13 +1581,11 @@
     function populateAdminForms() {
       syncCredsUI();
 
-      // Category select in upload tab
       const catSelect = document.getElementById('upload-category');
       catSelect.innerHTML = BOOKING_NICHES.map(
         (c) => `<option value="${c.id}">${c.label}</option>`
       ).join('');
 
-      // Profile fields
       const p = SITE_DATA.profile || {};
       document.getElementById('edit-brandName').value = p.brandName || '';
       document.getElementById('edit-fullName').value = p.fullName || '';
@@ -1148,12 +1612,12 @@
               type="text"
               data-cat-label-idx="${i}"
               value="${cat.label}"
-              class="flex-1 px-2.5 py-1.5 text-xs bg-transparent border border-hairline dark:border-hairlineDark"
+              class="flex-1 px-2.5 py-1.5 rounded-sm text-xs bg-transparent border border-hairline dark:border-hairlineDark"
             />
             <button
               type="button"
               data-remove-cat-idx="${i}"
-              class="px-2.5 py-1.5 font-mono text-[10px] text-red-500 border border-hairline dark:border-hairlineDark hover:border-red-500"
+              class="px-2.5 py-1.5 rounded-sm font-mono text-[10px] text-red-500 border border-hairline dark:border-hairlineDark hover:border-red-500"
             >
               &times;
             </button>
@@ -1215,10 +1679,10 @@
       btn.addEventListener('click', () => {
         const tab = btn.dataset.adminTab;
         document.querySelectorAll('.admin-tab-btn').forEach((b) => {
-          b.classList.remove('border-b', 'border-charcoal', 'dark:border-neutral-100', 'font-medium');
+          b.classList.remove('border-b-2', 'border-charcoal', 'dark:border-neutral-100', 'font-medium');
           b.classList.add('text-neutral-400');
         });
-        btn.classList.add('border-b', 'border-charcoal', 'dark:border-neutral-100', 'font-medium');
+        btn.classList.add('border-b-2', 'border-charcoal', 'dark:border-neutral-100', 'font-medium');
         btn.classList.remove('text-neutral-400');
 
         document.getElementById('admin-tab-upload').classList.toggle('hidden', tab !== 'upload');
@@ -1280,9 +1744,9 @@
         PORTFOLIO_FRAMES.unshift(newFrame);
         await commitUpdatedDataJson(`Add frame to gallery: ${title}`);
 
-        // Instant local preview using data URL until GitHub Pages finishes rebuilding
         const instantFrame = { ...newFrame, src: previewUrl };
         PORTFOLIO_FRAMES[0] = instantFrame;
+        renderCategoryNav();
         renderGallery();
         PORTFOLIO_FRAMES[0] = newFrame;
 
@@ -1362,9 +1826,9 @@
           <button
             type="button"
             data-niche="${niche.id}"
-            class="niche-pill px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.12em] border transition-colors ${
+            class="niche-pill px-3.5 py-2 rounded-sm text-[11px] font-mono uppercase tracking-[0.12em] border transition-all ${
               active
-                ? 'border-charcoal bg-charcoal text-alabaster dark:border-neutral-100 dark:bg-neutral-100 dark:text-obsidian'
+                ? 'border-charcoal bg-charcoal text-alabaster dark:border-neutral-100 dark:bg-neutral-100 dark:text-obsidian font-medium'
                 : 'border-hairline dark:border-hairlineDark text-neutral-500 hover:border-charcoal dark:hover:border-neutral-300'
             }"
           >
@@ -1388,8 +1852,10 @@
       });
     }
 
-    function openDrawer() {
-      if (activeCategory !== 'all' && BOOKING_NICHES.some((n) => n.id === activeCategory)) {
+    function openDrawer(preselectCategory) {
+      if (preselectCategory && BOOKING_NICHES.some((n) => n.id === preselectCategory)) {
+        selectedBookingNiche = preselectCategory;
+      } else if (activeCategory !== 'all' && BOOKING_NICHES.some((n) => n.id === activeCategory)) {
         selectedBookingNiche = activeCategory;
       }
       renderDrawerPills();
@@ -1406,7 +1872,8 @@
       document.body.style.overflow = '';
     }
 
-    document.getElementById('open-drawer-btn').addEventListener('click', openDrawer);
+    document.getElementById('open-drawer-btn').addEventListener('click', () => openDrawer());
+    document.getElementById('bottom-inquire-btn').addEventListener('click', () => openDrawer());
     document.getElementById('close-drawer-btn').addEventListener('click', closeDrawer);
     drawerBackdrop.addEventListener('click', (e) => {
       if (e.target === drawerBackdrop) closeDrawer();
@@ -1416,14 +1883,12 @@
     const copyBadge = document.getElementById('copy-badge');
     copyEmailBtn.addEventListener('click', () => {
       const email = copyEmailBtn.dataset.email;
-      navigator.clipboard?.writeText(email).catch(() => {
-        const tempInput = document.createElement('input');
-        tempInput.value = email;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-      });
+      const tempInput = document.createElement('input');
+      tempInput.value = email;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
 
       copyBadge.textContent = '[Copied]';
       setTimeout(() => {
@@ -1432,7 +1897,7 @@
     });
 
     /* -------------------------------------------------------------------
-     * LIGHTBOX VIEWER
+     * LIGHTBOX VIEWER (WITH SMOOTH TRANSITIONS & DIRECT INQUIRY)
      * ------------------------------------------------------------------- */
     function updateLightboxContent() {
       const frame = visibleFrames[currentLightboxIndex];
@@ -1440,14 +1905,21 @@
 
       const currentNum = String(currentLightboxIndex + 1).padStart(2, '0');
       const totalNum = String(visibleFrames.length).padStart(2, '0');
+      const catLabel = getCategoryLabel(frame.category);
 
+      lbImage.style.opacity = '0.35';
       lbCounter.textContent = `${currentNum} / ${totalNum}`;
       lbImage.src = resolveImageSrc(frame.src);
       lbImage.alt = frame.title;
       lbTitle.textContent = frame.title;
-      lbCategory.textContent = getCategoryLabel(frame.category);
-      lbExif.textContent = frame.exif || '';
-      lbLocation.textContent = frame.location || '';
+      lbCategory.textContent = catLabel;
+      lbCategoryTop.textContent = `${catLabel} — ${frame.location || 'Malaysia'}`;
+      lbExif.textContent = frame.exif || '35mm / f1.4';
+      lbLocation.textContent = frame.location || 'Kuala Lumpur';
+
+      lbImage.onload = () => {
+        lbImage.style.opacity = '1';
+      };
     }
 
     function openLightbox(index) {
@@ -1465,21 +1937,36 @@
     }
 
     function showNextFrame() {
+      if (!visibleFrames.length) return;
       currentLightboxIndex = (currentLightboxIndex + 1) % visibleFrames.length;
       updateLightboxContent();
     }
 
     function showPrevFrame() {
+      if (!visibleFrames.length) return;
       currentLightboxIndex = (currentLightboxIndex - 1 + visibleFrames.length) % visibleFrames.length;
       updateLightboxContent();
     }
 
     document.getElementById('lb-close').addEventListener('click', closeLightbox);
-    document.getElementById('lb-next').addEventListener('click', showNextFrame);
-    document.getElementById('lb-prev').addEventListener('click', showPrevFrame);
+    document.getElementById('lb-next').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showNextFrame();
+    });
+    document.getElementById('lb-prev').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPrevFrame();
+    });
+
+    // Inquire Similar Button inside Lightbox
+    document.getElementById('lb-inquire-btn').addEventListener('click', () => {
+      const currentFrame = visibleFrames[currentLightboxIndex];
+      closeLightbox();
+      openDrawer(currentFrame?.category);
+    });
 
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox || e.target.parentElement === lightbox) {
+      if (e.target === lightbox || e.target.id === 'lb-stage') {
         closeLightbox();
       }
     });
@@ -1509,7 +1996,7 @@
     }, { passive: true });
 
     /* -------------------------------------------------------------------
-     * INITIALIZATION FROM data.json
+     * INITIALIZATION & CURATED EDITORIAL SHOWCASE FALLBACK
      * ------------------------------------------------------------------- */
     function refreshNormalizedCategories() {
       const rawCats = Array.isArray(SITE_DATA.categories) ? SITE_DATA.categories : [];
@@ -1527,9 +2014,75 @@
       }
     }
 
+    const FALLBACK_FRAMES = [
+      {
+        src: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=85",
+        title: "Keynote Silhouette",
+        category: "corporate",
+        location: "KLCC Convention Centre",
+        exif: "35mm f/1.4 • ISO 800"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=85",
+        title: "Monochrome Study IV",
+        category: "fashion",
+        location: "Bukit Bintang, KL",
+        exif: "85mm f/1.2 • 1/1000s"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=1400&q=85",
+        title: "Under Floodlights",
+        category: "sports",
+        location: "Cyberjaya Arena",
+        exif: "70-200mm f/2.8 • 1/1600s"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=85",
+        title: "Chancellery Procession",
+        category: "convocation",
+        location: "PICC Putrajaya",
+        exif: "50mm f/1.4 • ISO 400"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85",
+        title: "Afterhours Concrete",
+        category: "fashion",
+        location: "REXKL, Kuala Lumpur",
+        exif: "35mm f/1.4 • 1/500s"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1400&q=85",
+        title: "ASEAN Leadership Forum",
+        category: "corporate",
+        location: "MITEC Kuala Lumpur",
+        exif: "24-70mm f/2.8 • ISO 640"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1400&q=85",
+        title: "Candlelight Toast",
+        category: "birthday",
+        location: "Bangsar South",
+        exif: "35mm f/1.4 • ISO 1600"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1400&q=85",
+        title: "Final Whistle Sprint",
+        category: "sports",
+        location: "Stadium Nasional Bukit Jalil",
+        exif: "135mm f/1.8 • 1/2000s"
+      },
+      {
+        src: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1400&q=85",
+        title: "Class of '26 Portrait",
+        category: "convocation",
+        location: "Cyberjaya Campus",
+        exif: "85mm f/1.4 • ISO 200"
+      }
+    ];
+
     const FALLBACK_DATA = {
       profile: {
-        pageTitle: "HILMI PHOTOGRAPHY",
+        pageTitle: "HILMI PHOTOGRAPHY — Selected Works",
         metaDescription: "Selected photography by Wan Muhammad Hilmi across Corporate Events, Convocation, Fashion, Sports, and Birthdays in Cyberjaya & Kuala Lumpur.",
         brandName: "HILMI VISUALS 2026",
         fullName: "Wan Muhammad Hilmi",
@@ -1550,12 +2103,13 @@
         { id: "sports", label: "Sports" },
         { id: "birthday", label: "Birthday" }
       ],
-      frames: []
+      frames: FALLBACK_FRAMES
     };
 
     function applySiteData(siteData) {
       SITE_DATA = siteData;
-      PORTFOLIO_FRAMES = Array.isArray(SITE_DATA.frames) ? SITE_DATA.frames : [];
+      const loadedFrames = Array.isArray(SITE_DATA.frames) ? SITE_DATA.frames : [];
+      PORTFOLIO_FRAMES = loadedFrames.length > 0 ? loadedFrames : [...FALLBACK_FRAMES];
       refreshNormalizedCategories();
       hydrateProfile(SITE_DATA.profile);
       renderCategoryNav();
@@ -1564,13 +2118,14 @@
     }
 
     async function initPortfolio() {
+      initTheme();
       try {
         const response = await fetch(`./data.json?t=${Date.now()}`, { cache: 'no-store' });
         if (!response.ok) throw new Error('Failed to load data.json');
         const loaded = await response.json();
         applySiteData(loaded);
       } catch (err) {
-        console.warn('Falling back to embedded preview data:', err);
+        console.warn('Using curated editorial fallback showcase:', err);
         applySiteData(FALLBACK_DATA);
       }
     }
@@ -1579,3 +2134,4 @@
   </script>
 </body>
 </html>
+```
