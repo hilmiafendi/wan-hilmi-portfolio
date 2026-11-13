@@ -52,6 +52,9 @@ content:
     type: file
     path: data.json
     fields:
+      - name: githubRepo
+        label: GitHub Repo (owner/repo-name, e.g. wanhilmi/photography)
+        type: string
       - name: profile
         label: Profile & Contact Info
         type: object
